@@ -18,17 +18,17 @@ public class Fibo {
         int n = 33;
         System.out.printf("calc(%d)=%d \n\t time=%d \n\n", n, fibo.calc(n), fibo.time());
 
-        //вычисление чисел фибоначчи медленным методом (рекурсией)
+        // вычисление чисел фибоначчи медленным методом (рекурсией)
         fibo = new Fibo();
         n = 33;
         System.out.printf("slowA(%d)=%d \n\t time=%d \n\n", n, fibo.slowA(n), fibo.time());
 
-        //вычисление чисел простым быстрым методом
+        // вычисление чисел простым быстрым методом
         fibo = new Fibo();
         n = 55555;
         System.out.printf("fastB(%d)=%d \n\t time=%d \n\n", n, fibo.fastB(n), fibo.time());
 
-        //вычисление чисел фибоначчи самым быстрым методом
+        // вычисление чисел фибоначчи самым быстрым методом
         fibo = new Fibo();
         n = 55555;
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n), fibo.time());
@@ -36,8 +36,8 @@ public class Fibo {
 
 
     private int calc(int n) {
-        //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
-        //время O(2^n)
+        // здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
+        // время O(2^n)
         return 0;
     }
 

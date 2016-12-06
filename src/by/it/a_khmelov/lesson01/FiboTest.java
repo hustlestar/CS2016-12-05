@@ -10,9 +10,9 @@ public class FiboTest {
     /*
     для прохождения тестов создайте JUnit-конфигурацию на свой пакет:
     Поля:
-    Test kind: All in package
-    Package: by.it.a_khmelov (тут ваша фамилия)
-    Search for test: In whole project
+    Test kind:          All in package
+    Package:            by.it.a_khmelov (тут ваша фамилия)
+    Search for test:    In whole project
     */
 
 
