@@ -30,7 +30,7 @@ public class Fibo {
 
         //вычисление чисел фибоначчи самым быстрым методом
         fibo = new Fibo();
-        n = 55555;
+        n = 33;
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n), fibo.time());
     }
 
@@ -66,10 +66,22 @@ public class Fibo {
     }
 
     BigInteger fasterC(Integer n) {
-
         //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
         //вариант, какой только сумеете
-        return BigInteger.ZERO;
+        if (n == 0) return BigInteger.ZERO;
+        if (n == 1) return BigInteger.ONE;
+
+        BigInteger fibo1 = BigInteger.ONE;
+        BigInteger fibo2 = BigInteger.ZERO;
+        BigInteger fibonachi = BigInteger.ZERO;
+        for (int i = 0; i < n; i++) {
+            fibonachi = fibo1.add(fibo2);
+            fibo1 = fibo2;
+            fibo2 = fibonachi;
+        }
+
+
+        return fibonachi;
     }
 
 
