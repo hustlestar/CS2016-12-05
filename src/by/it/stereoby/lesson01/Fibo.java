@@ -1,6 +1,7 @@
-package by.it.a_khmelov.lesson01;
+package by.it.stereoby.lesson01;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 /*
  * Вам необходимо выполнить три способа вычисления чисел Фибоначчи
@@ -36,31 +37,54 @@ public class Fibo {
 
 
     private int calc(int n) {
-        //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
-        //время O(2^n)
-        return 0;
+        if (n <= 2) {
+            return 1;													//O(1)
+        } else {
+            return calc(n - 1) + calc(n - 2);							//O(2^(n-2))
+        }
     }
 
 
-    BigInteger slowA(Integer n) {
-        //рекурсия
-        //здесь нужно реализовать вариант без ограничения на размер числа,
-        //в котором код совпадает с мат.определением чисел Фибоначчи
-        //время O(2^n)
-
-        return BigInteger.ZERO;
+    public BigInteger slowA(Integer n) {
+    	if(n.compareTo(2) <= 0) {
+    		return new BigInteger("1");
+    	} else {
+    		return slowA(n-1).add(slowA(n-2));
+    	}
+        // Итого: 
+        //		Скорость выполнения: 1 + 2^(n-2) = 2^(n-2) = O(2^n)
+        //		Память:	O(2^n)?   	
     }
 
-    BigInteger fastB(Integer n) {
-        //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
-        return BigInteger.ZERO;
+    public BigInteger fastB(Integer n) {
+    	ArrayList<BigInteger> sequence = new ArrayList<>((int)n);		//O(n)
+    	sequence.add(BigInteger.ZERO);									//O(1)
+    	sequence.add(BigInteger.ONE);									//O(1)
+    	
+    	for(int i = 2; i <= (int) n; i++) {								//O(n)
+    		sequence.add(sequence.get(i-1).add(sequence.get(i-2)));		//O(3)
+    	}
+    	
+    	return sequence.get((int) n);									//O(1)
+    	// Итого: 
+        //		Скорость выполнения: n + 1 + 1 + n * 3 + 1 = 4*n + 3 = O(n)
+        //		Память: O(n)
     }
 
-    BigInteger fasterC(Integer n) {
+    public BigInteger fasterC(Integer n) {
+    	BigInteger previous = BigInteger.ZERO;							//O(1)
+    	BigInteger current = BigInteger.ONE;							//O(1)
+    	BigInteger temp = null;											//O(1)
+        for(int i = 1; i < (int) n; i++) {								//O(n)
+        	temp = current;												//O(1)
+        	current = current.add(previous);							//O(1)
+        	previous = temp;											//O(1)
+        }
 
-        //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
-        //вариант, какой только сумеете
-        return BigInteger.ZERO;
+        return current;													//O(1)
+    	// Итого: 
+        //		Скорость выполнения: 1 + 1 + 1 + n * 1 + n * 1 + n * 1 + 1 = 3*n + 4 = O(n)
+        //		Память:	O(3)?
     }
 
 
