@@ -50,8 +50,12 @@ public class Fibo {
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
 
-        return BigInteger.ZERO;
-    }
+            if (n <= 0) return BigInteger.ZERO;
+            else if(n == 1) return BigInteger.ONE;
+            else return slowA(n-1).add(slowA(n-2));
+        }
+
+
 
     BigInteger fastB(Integer n) {
         //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
@@ -79,20 +83,17 @@ public class Fibo {
         //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
         //вариант, какой только сумеете
 
-        BigInteger f1 = BigInteger.valueOf(0);
+        BigInteger f1 = BigInteger.valueOf(0);//Примерно на 25% быстрее, чем алгоритм с массивом
         BigInteger f2 = BigInteger.valueOf(1);
 
-        BigInteger fibo = BigInteger.valueOf(0);
+        BigInteger fibo = BigInteger.valueOf(1);
 
-        for(int i = n; i < 1000; i++) {
-            System.out.print(fibo + " ");
+        for(int i = 0; i < n-1; i++) {//no need to calculate first element, this one is already defined, that's why n-1
             fibo = f1.add(f2);
             f1 = f2;
             f2 = fibo;
         }
-
         return fibo;
-        //return BigInteger.ZERO;
     }
 
 
