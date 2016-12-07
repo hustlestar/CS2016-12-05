@@ -2,14 +2,23 @@
 Пакет должен называться так:
 by.it.ivanov
 
-2) В свой пакет копируйте папки lesson?? из моего пакета (by.it.a_khmelov)
+2) В свой пакет копируйте папки lessonXX из by.it.a_khmelov
+Важно! Копируйте, а не переносите. Ctrl+C Ctrl+V.
 
 3) Выполняйте предложенные задания, если есть тесты,
 они должны обязательно проходить без ошибок.
+Создать конфигурацию запуска для теста можно так:
+Run -> Edit Configuration -> Кнопка + -> Junit
+    Поля:
+    Name:               Test a_khmelov (тут ваша фамилия)
+    Test kind:          All in package
+    Package:            by.it.a_khmelov (тут ваша фамилия)
+    Search for test:    In whole project
+Запуск тестов из панели инструментов или Alt+Shift+F10 -> Test a_khmelov
 
 4) Чтобы сдать выполненную работу сделайте следующее:
- - commit (VSC-Commit Changes...)
- - push (VSC-Push...)
+ - commit (VCS-Commit Changes...)
+ - push (VCS-Push...)
  - Pull Request (VCS-Pull Request)
 
 ВАЖНО! МЫ ВСЕ ПИШЕМ ПРЯМО В MASTER!
