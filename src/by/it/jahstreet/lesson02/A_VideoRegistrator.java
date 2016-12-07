@@ -41,7 +41,6 @@ public class A_VideoRegistrator {
                 if (i >= events.length) break;
             }
         }
-
         return result;                        //вернем итог 1.0, 2.2, 3.7,
     }
 }
