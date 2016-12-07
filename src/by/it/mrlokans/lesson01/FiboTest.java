@@ -1,4 +1,4 @@
-package by.it.mrlokans;
+package by.it.mrlokans.lesson01;
 
 import org.junit.Test;
 
