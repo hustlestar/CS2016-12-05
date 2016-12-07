@@ -63,22 +63,21 @@ public class C_GreedyKnapsack {
         Arrays.sort(items, Collections.reverseOrder());
 
 
-        //тут необходимо реализовать решение задачи
-        //итогом является максимально воможная стоимость вещей в рюкзаке
-        //вещи можно резать на кусочки (непрерывный рюкзак)
         double result = 0;
-        //тут реализуйте алгоритм сбора рюкзака
-        //будет особенно хорошо, если с собственной сортировкой
-        //ваше решение. кроме того, можете описать свой компаратор в классе Item
+
         double remainingWeight = (double) W;
 
         for(Item item: items){
-            double numberOfItems = maximumNumberOfItems(item, (int) remainingWeight);
-            if (numberOfItems == 0.0){
+            if (remainingWeight == 0){
                 break;
             }
-            result += numberOfItems * item.cost;
-            remainingWeight -= numberOfItems * item.weight;
+            if (remainingWeight - item.weight >= 0.0){
+                result += item.cost;
+                remainingWeight -=  item.weight;
+            } else {
+                result += remainingWeight * item.cost / item.weight;
+                break;
+            }
         }
 
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
