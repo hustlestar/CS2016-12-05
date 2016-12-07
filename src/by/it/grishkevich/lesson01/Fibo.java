@@ -48,6 +48,7 @@ public class Fibo {
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
 
+
         return BigInteger.ZERO;
     }
 
