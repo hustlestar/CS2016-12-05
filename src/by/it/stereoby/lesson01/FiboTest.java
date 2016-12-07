@@ -1,4 +1,4 @@
-package by.it.a_khmelov.lesson01;
+package by.it.stereoby.lesson01;
 
 import org.junit.Test;
 
