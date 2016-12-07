@@ -72,7 +72,20 @@ public class Fibo {
 
     BigInteger fastB(Integer n) {
         //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
-        return BigInteger.ZERO;
+        BigInteger[] a = new BigInteger[n+1];
+
+
+        a[0] = BigInteger.valueOf(0);
+        a[1] = BigInteger.valueOf(1);
+
+        for (int i=2; i<a.length; i++){
+
+            a[i] = a[i-1].add(a[i-2]);
+
+        }
+
+        BigInteger fibo = a[n];
+        return fibo;
     }
 
     BigInteger fasterC(Integer n) {
