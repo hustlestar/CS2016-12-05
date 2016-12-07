@@ -53,6 +53,7 @@ public class Fibo {
     }
 
     BigInteger fastB(Integer n) {
+        
         BigInteger[] bigInteger = new BigInteger[n + 1];
 
         if (n == 0)
@@ -70,10 +71,22 @@ public class Fibo {
     }
 
     BigInteger fasterC(Integer n) {
+        if (n == 0)
+            return BigInteger.valueOf(0);
+        else if (n == 1)
+            return BigInteger.valueOf(1);
+        else {
+            BigInteger firstNumb = BigInteger.valueOf(0);
+            BigInteger secondNumb = BigInteger.valueOf(1);
+            BigInteger numb = BigInteger.valueOf(47);
 
-        //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
-        //вариант, какой только сумеете
-        return BigInteger.ZERO;
+            for (int i = 2; i <= n; i++) {
+                numb = firstNumb.add(secondNumb);
+                firstNumb = secondNumb;
+                secondNumb = numb;
+            }
+            return numb;
+        }
     }
 
 
