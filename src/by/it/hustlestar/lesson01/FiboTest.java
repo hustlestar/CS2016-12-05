@@ -1,4 +1,4 @@
-package by.it.a_khmelov_hustlestar.lesson01;
+package by.it.hustlestar.lesson01;
 
 import org.junit.Test;
 
