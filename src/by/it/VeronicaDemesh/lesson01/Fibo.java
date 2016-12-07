@@ -39,7 +39,19 @@ public class Fibo {
     private int calc(int n) {
         //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-        return 0;
+        int n1 = 0;
+        int n2 = 1;
+        int res = 0;
+        if (n <= 1) {
+            return n;
+        } else {
+            for (int i = 2; i <= n; i++) {
+                res = n1 + n2;
+                n1 = n2;
+                n2 = res;
+            }
+            return res;
+        }
     }
 
 
@@ -63,6 +75,16 @@ public class Fibo {
     BigInteger fastB(Integer n) {
         //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
 
+        BigInteger[] fibo = new BigInteger[n+1];
+        fibo[0] = BigInteger.ZERO;
+        fibo[1] = BigInteger.ONE;
+        for (int i = 2; i < fibo.length; i++) {
+            fibo[i] = fibo[i-1].add(fibo[i-2]);
+        }
+        return fibo[n];
+    }
+
+    BigInteger fasterC(Integer n) {
         BigInteger big1 = new BigInteger("0");
         BigInteger big2 = new BigInteger("1");
 
@@ -74,36 +96,4 @@ public class Fibo {
 
         return big1;
     }
-
-    BigInteger fasterC(Integer n) {
-        BigInteger arr1[][] = {{BigInteger.ONE, BigInteger.ONE}, {BigInteger.ONE, BigInteger.ZERO}};
-        if (n == 0)
-            return BigInteger.ZERO;
-        else {
-            power(arr1, n - 1);
-            return arr1[0][0];
-        }
-    }
-
-    private void power(BigInteger arr1[][], int n) {
-        if (n == 0 || n == 1)
-            return;
-        BigInteger arr2[][] = {{BigInteger.ONE, BigInteger.ONE}, {BigInteger.ONE, BigInteger.ZERO}};
-        power(arr1, n / 2);
-        multiply(arr1, arr1);
-        if (n % 2 != 0)
-            multiply(arr1, arr2);
-    }
-
-    private void multiply(BigInteger arr1[][], BigInteger arr2[][]) {
-        BigInteger x = (arr1[0][0].multiply(arr2[0][0])).add(arr1[0][1].multiply(arr2[1][0]));
-        BigInteger y = (arr1[0][0].multiply(arr2[0][1])).add(arr1[0][1].multiply(arr2[1][1]));
-        BigInteger z = (arr1[1][0].multiply(arr2[0][0])).add(arr1[1][1].multiply(arr2[1][0]));
-        BigInteger w = (arr1[1][0].multiply(arr2[0][1])).add(arr1[1][1].multiply(arr2[1][1]));
-        arr1[0][0] = x;
-        arr1[0][1] = y;
-        arr1[1][0] = z;
-        arr1[1][1] = w;
-    }
-
 }
