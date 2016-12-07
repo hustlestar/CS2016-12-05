@@ -38,16 +38,7 @@ public class Fibo {
     private int calc(int n) {
         //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-        if (n == 0){ return 0;}
-        if (n == 1){ return 1;}
-        else {
-            int a = 0, b = 1, fib = 0;
-            for(int i = 2; i <= n; i++){
-            fib = a + b;
-            a = b;
-            b = fib;}
-            return fib;
-        }
+        return 0;
     }
 
 
@@ -56,12 +47,9 @@ public class Fibo {
         //здесь нужно реализовать вариант без ограничения на размер числа,
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-        if (n == 0) {
-            return BigInteger.ZERO;
-        } else if (n == 1) {
-            return BigInteger.ONE;
-        }
-        return slowA(n-1).add(slowA(n - 2));
+
+
+        return BigInteger.ZERO;
     }
 
     BigInteger fastB(Integer n) {
