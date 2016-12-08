@@ -2,7 +2,6 @@ package by.it.makstra.lesson02;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
@@ -13,11 +12,6 @@ public class C_GreedyKnapsack {
         Item(int cost, int weight) {
             this.cost = cost;
             this.weight = weight;
-        }
-
-        public double getSpecific() {             //стоимость за единицу(за кг)
-            double average = cost / weight;
-            return average;
         }
 
         @Override
@@ -31,12 +25,9 @@ public class C_GreedyKnapsack {
         @Override
         public int compareTo(Item o) {
             //тут может быть ваш компаратор
-            if(getSpecific()<o.getSpecific())
-            {return 1;}
-            if(getSpecific()>o.getSpecific())
-            {return -1;}
-            else
-                return 0;
+
+
+            return 0;
         }
     }
 
@@ -62,26 +53,14 @@ public class C_GreedyKnapsack {
         //будет особенно хорошо, если с собственной сортировкой
         //ваше решение. кроме того, можете описать свой компаратор в классе Item
 
-        Arrays.sort(items);
-        int sumW = 0; //сумма в рюкзаке по весу
 
-        for(int i=0; i<n; i++)
-        {
-            if(items[i].weight<(W-sumW)){
-                result += items[i].cost;
-                sumW += items[i].weight;
-            }
-            else
-            {
-                int weightR = W - sumW; // находим вес остатка
-                result += weightR*items[i].getSpecific();
-                break;
-            }
-        }
+
+
 
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
     }
+
     public static void main(String[] args) throws FileNotFoundException {
         long startTime = System.currentTimeMillis();
         String root=System.getProperty("user.dir")+"/src/";
