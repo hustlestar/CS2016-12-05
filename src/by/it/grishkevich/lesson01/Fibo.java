@@ -38,6 +38,7 @@ public class Fibo {
     private int calc(int n) {
         //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
+<<<<<<< HEAD
         if (n == 0){ return 0;}
         if (n == 1){ return 1;}
         else {
@@ -48,6 +49,9 @@ public class Fibo {
             b = fib;}
             return fib;
         }
+=======
+        return 0;
+>>>>>>> origin/master
     }
 
 
@@ -61,6 +65,10 @@ public class Fibo {
         } else if (n == 1) {
             return BigInteger.ONE;
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
         return slowA(n-1).add(slowA(n - 2));
     }
 
