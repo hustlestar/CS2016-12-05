@@ -2,6 +2,8 @@ package by.it.wtsiamruk.lesson02;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
@@ -25,9 +27,10 @@ public class C_GreedyKnapsack {
         @Override
         public int compareTo(Item o) {
             //тут может быть ваш компаратор
-
-
-            return 0;
+            double ourSpecificWeight = cost/weight;
+            double nextItemSpecificWeight = o.cost/o.weight;
+            if (ourSpecificWeight == nextItemSpecificWeight) return 0;
+            return (ourSpecificWeight > nextItemSpecificWeight)? 1 : -1;
         }
     }
 
@@ -52,6 +55,20 @@ public class C_GreedyKnapsack {
         //тут реализуйте алгоритм сбора рюкзака
         //будет особенно хорошо, если с собственной сортировкой
         //ваше решение. кроме того, можете описать свой компаратор в классе Item
+        Arrays.sort(items, Collections.reverseOrder());
+        for (Item item : items)
+        {
+            if (W - item.weight >= 0)
+            {
+                result += item.cost;
+                W -= item.weight;
+            }
+            else
+            {
+                result += W * item.cost/item.weight;
+                break;
+            }
+        }
 
 
 
