@@ -1,4 +1,4 @@
-package by.it.hustlestar.lesson02;
+package by.it.rudkouski.lesson02;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,24 +20,11 @@ public class A_VideoRegistrator {
         List<Double> result;
         result = new ArrayList<>();
         int i = 0;                              //i - это индекс события events[i]
-        Arrays.sort(events);//комментарии от проверочного решения сохранены для подсказки, но вы можете их удалить.
+        //комментарии от проверочного решения сохранены для подсказки, но вы можете их удалить.
         //подготовка к жадному поглощению массива событий
         //hint: сортировка Arrays.sort обеспечит скорость алгоритма
-        //C*(n log n) + C1*0n = O(n log n)
-        double start = events[i];
-        double finish = 0;
-        result.add(start);
-        while (finish < events[events.length - 1]) {
-            finish = start + workDuration;
-            for (int j = i; j < events.length - 1; j++) {
-                if (events[j] > finish) {
-                    i = j;
-                    start = events[i];
-                    result.add(start);
-                    break;
-                }
-            }
-        }
+        //C*(n log n) + C1*n = O(n log n)
+
         //пока есть незарегистрированные события
         //получим одно событие по левому краю
         //и запомним время старта видеокамеры
@@ -45,7 +32,14 @@ public class A_VideoRegistrator {
         //и теперь пропустим все покрываемые события
         //за время до конца работы, увеличивая индекс
 
-
+        Arrays.sort(events);
+        for (; i < events.length; i++) {
+            result.add(events[i]);
+            double endTime = events[i] + workDuration;
+            while (i + 1 < events.length&& endTime >= events[i + 1]) {
+                i++;
+            }
+        }
         return result;                        //вернем итог
     }
 }
