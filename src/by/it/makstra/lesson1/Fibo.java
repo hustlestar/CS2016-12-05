@@ -75,10 +75,15 @@ public class Fibo {
     }
 
     BigInteger fasterC(Integer n) {
-
-        //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
-        //вариант, какой только сумеете
-        return BigInteger.ZERO;
+        BigInteger res = BigInteger.valueOf(0);
+        BigInteger mem1 = BigInteger.valueOf(0);
+        BigInteger mem2 = BigInteger.valueOf(1);
+        for (int i = 2; i < n+1; i++) {
+            res = mem1.add(mem2);
+            mem1 = mem2;
+            mem2 = res;
+        }
+        return res;
     }
 
 
