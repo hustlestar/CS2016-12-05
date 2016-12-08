@@ -66,7 +66,19 @@ public class Fibo {
 
     BigInteger fastB(Integer n) {
         //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
-        return BigInteger.ZERO;
+        BigInteger[] fibArr = new BigInteger[n + 1];
+        for (int i = 0; i <= n; i++){
+            if (i == 0){
+                fibArr[i] = BigInteger.ZERO;
+            }
+            else if (i == 1) {
+                fibArr[i] = BigInteger.ONE;
+            }
+            else {
+                fibArr[i] = fibArr[i-1].add(fibArr[i-2]);
+            }
+        }
+        return fibArr[n];
     }
 
     BigInteger fasterC(Integer n) {
