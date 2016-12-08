@@ -1,6 +1,8 @@
 package by.it.jahstreet.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class B_Sheduler {
@@ -26,9 +28,20 @@ public class B_Sheduler {
         List<Event> result;
         result = new ArrayList<>();
         //ваше решение.
+        Comparator<Event> eventComparator = new Comparator<Event>() {
+            @Override
+            public int compare(Event o1, Event o2) {
+                return o1.stop - o2.stop;
+            }
+        };
+        Arrays.sort(events, eventComparator);
+        result.add(events[0]);
+        for (int i = 1; i < events.length; i++) {
+            if (events[i].start < result.get(result.size() - 1).stop) continue;
+            else result.add(events[i]);
+        }
 
-
-        return result;                        //вернем итог 0-1 1-2 2-3 3-5 6-7 7-9
+        return result;
     }
 
     //событие у аудитории(два поля: начало и конец)
