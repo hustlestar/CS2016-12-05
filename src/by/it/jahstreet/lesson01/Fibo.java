@@ -9,10 +9,6 @@ public class Fibo {
 
     private long startTime = System.currentTimeMillis();
 
-    private long time() {
-        return System.currentTimeMillis() - startTime;
-    }
-
     public static void main(String[] args) {
         Fibo fibo = new Fibo();
         int n = 33;
@@ -34,11 +30,16 @@ public class Fibo {
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n), fibo.time());
     }
 
+    private long time() {
+        return System.currentTimeMillis() - startTime;
+    }
 
     private int calc(int n) {
         //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-        return 0;
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        return calc(n - 1) + (calc(n - 2));
     }
 
 
@@ -47,21 +48,43 @@ public class Fibo {
         //здесь нужно реализовать вариант без ограничения на размер числа,
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-        if (n==0) return BigInteger.ZERO;
-        if (n==1) return BigInteger.ONE;
-        return slowA(n-1).add(slowA(n-2));
+        if (n == 0) return BigInteger.ZERO;
+        if (n == 1) return BigInteger.ONE;
+        return slowA(n - 1).add(slowA(n - 2));
     }
 
     BigInteger fastB(Integer n) {
         //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
-        return BigInteger.ZERO;
+        BigInteger[] arr = new BigInteger[3];
+        arr[0] = BigInteger.ZERO;
+        arr[1] = BigInteger.ONE;
+
+        if (n <= 0) return arr[0];
+        if (n == 1) return arr[1];
+
+        for (int i = 2; i <= n; i++) {
+            arr[2] = arr[0].add(arr[1]);
+            arr[0] = arr[1];
+            arr[1] = arr[2];
+        }
+        return arr[2];
     }
 
     BigInteger fasterC(Integer n) {
 
         //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
         //вариант, какой только сумеете
-        return BigInteger.ZERO;
+
+        BigInteger zero = BigInteger.ZERO;
+        BigInteger one = BigInteger.ONE;
+        BigInteger res = one;
+        for (int i = 2; i <= n; i++) {
+            res = zero.add(one);
+            zero = one;
+            one = res;
+        }
+
+        return res;
     }
 
 
