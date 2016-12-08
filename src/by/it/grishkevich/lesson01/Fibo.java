@@ -52,6 +52,10 @@ public class Fibo {
         } else if (n == 1) {
             return BigInteger.ONE;
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
         return slowA(n-1).add(slowA(n - 2));
     }
 
