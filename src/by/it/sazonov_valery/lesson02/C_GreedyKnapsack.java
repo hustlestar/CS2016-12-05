@@ -2,6 +2,7 @@ package by.it.sazonov_valery.lesson02;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
@@ -25,9 +26,7 @@ public class C_GreedyKnapsack {
         @Override
         public int compareTo(Item o) {
             //тут может быть ваш компаратор
-
-
-            return 0;
+            return o.cost / o.weight - this.cost / this.weight;
         }
     }
 
@@ -40,10 +39,10 @@ public class C_GreedyKnapsack {
             items[i] = new Item(input.nextInt(), input.nextInt());
         }
         //покажем предметы
-        for (Item item:items) {
+        for (Item item : items) {
             System.out.println(item);
         }
-        System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n",n,W);
+        System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n", n, W);
 
         //тут необходимо реализовать решение задачи
         //итогом является максимально воможная стоимость вещей в рюкзаке
@@ -53,20 +52,26 @@ public class C_GreedyKnapsack {
         //будет особенно хорошо, если с собственной сортировкой
         //ваше решение. кроме того, можете описать свой компаратор в классе Item
 
-
-
-
-
-        System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
+        Arrays.sort(items);
+        for (Item item : items) {
+            if (item.weight <= W){
+                result += item.cost;
+                W -= item.weight;
+            } else {
+                result += item.cost / item.weight * W;
+                break;
+            }
+        }
+        System.out.printf("Удалось собрать рюкзак на сумму %f\n", result);
         return result;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
         long startTime = System.currentTimeMillis();
-        String root=System.getProperty("user.dir")+"/src/";
-        File f=new File(root+"by/it/a_khmelov/lesson02/greedyKnapsack.txt");
-        double costFinal=new C_GreedyKnapsack().calc(f);
+        String root = System.getProperty("user.dir") + "/src/";
+        File f = new File(root + "by/it/a_khmelov/lesson02/greedyKnapsack.txt");
+        double costFinal = new C_GreedyKnapsack().calc(f);
         long finishTime = System.currentTimeMillis();
-        System.out.printf("Общая стоимость %f (время %d)",costFinal,finishTime - startTime);
+        System.out.printf("Общая стоимость %f (время %d)", costFinal, finishTime - startTime);
     }
 }

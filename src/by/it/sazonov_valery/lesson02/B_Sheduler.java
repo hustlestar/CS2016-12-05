@@ -64,7 +64,7 @@ public class B_Sheduler {
                 result.add(events[i]);
             }
         }
-        
+
         return result;                        //вернем итог
     }
 }
