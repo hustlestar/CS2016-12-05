@@ -1,6 +1,8 @@
 package by.it.sazonov_valery.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class B_Sheduler {
@@ -42,12 +44,27 @@ public class B_Sheduler {
         List<Event> result;
         result = new ArrayList<>();
         //ваше решение.
+        Comparator s = new Comparator<Event>() {
+            @Override
+            public int compare(Event o1, Event o2) {
+                return o1.stop-o2.stop;
+            }
+        };
+        Arrays.sort(events, s);
 
+        for (int i = 0; i < events.length; i++) {
+            if (events[i].start >= from) {
+                result.add(events[i]);
+                break;
+            }
+        }
 
-
-
-
-
+        for (int i = 0; i < events.length; i++) {
+            if (events[i].start >= result.get(result.size()-1).stop && events[i].start > from && events[i].stop <= to){
+                result.add(events[i]);
+            }
+        }
+        
         return result;                        //вернем итог
     }
 }
