@@ -34,7 +34,6 @@ public class Fibo {
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n), fibo.time());
     }
 
-
     private int calc(int n) {
         //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
@@ -49,7 +48,6 @@ public class Fibo {
             return fib;
         }
     }
-
 
     BigInteger slowA(Integer n) {
         //рекурсия
@@ -85,8 +83,14 @@ public class Fibo {
 
         //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
         //вариант, какой только сумеете
-        return BigInteger.ZERO;
+        BigInteger b = BigInteger.ZERO;
+        BigInteger b1 = BigInteger.ZERO;
+        BigInteger b2 = BigInteger.ONE;
+        for (int i = 2; i < n+1; i++) {
+            b = b1.add(b2);
+            b1 = b2;
+            b2 = b;
+        }
+        return b;
     }
-
-
 }
