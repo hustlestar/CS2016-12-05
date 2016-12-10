@@ -1,6 +1,6 @@
-package by.it.a_khmelov.lesson02;
-
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class B_Sheduler {
@@ -42,12 +42,19 @@ public class B_Sheduler {
         List<Event> result;
         result = new ArrayList<>();
         //ваше решение.
-        Arrays.sort(events, <Comparator> Event.stop);
-        int i =0;
-        result.add(events[i]);
+        Arrays.sort(events, new Comparator<Event>(){
+            public int compare(Event firstObject, Event secondObject){
+
+                return firstObject.stop - secondObject.stop;
+
+            }
+
+        });
+
+        result.add(events[0]);
 
         for (int i = 1; i < events.length; i++){
-            if (events[i].start >= events[i-1].stop){
+            if (events[i].start >= result.get(result.size()-1).stop && events[i].stop < to && events[i].start > from){
                 result.add(events[i]);
             }
 
