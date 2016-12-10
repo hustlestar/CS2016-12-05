@@ -2,6 +2,7 @@ package by.it.grishkevich.lesson02;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class C_GreedyKnapsack {
@@ -25,9 +26,7 @@ public class C_GreedyKnapsack {
         @Override
         public int compareTo(Item o) {
             //тут может быть ваш компаратор
-
-
-            return 0;
+            return  o.cost/o.weight - this.cost/this.weight;
         }
     }
 
@@ -52,11 +51,20 @@ public class C_GreedyKnapsack {
         //тут реализуйте алгоритм сбора рюкзака
         //будет особенно хорошо, если с собственной сортировкой
         //ваше решение. кроме того, можете описать свой компаратор в классе Item
+        Arrays.sort(items);
 
-
-
-
-
+        int i=0;
+        int capacity = W;
+        while (capacity > 0 && i <= items.length){
+            if(items[i].weight < capacity){
+                result = result + items[i].cost;
+                capacity = capacity -  items[i].weight;
+            } else if(items[i].weight > capacity){
+                result = result + capacity*1.0 / items[i].weight*items[i].cost;
+                capacity = 0;
+            }
+            i++;
+        }
         System.out.printf("Удалось собрать рюкзак на сумму %f\n",result);
         return result;
     }
