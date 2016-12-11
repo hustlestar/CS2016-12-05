@@ -2,6 +2,8 @@ package by.it.mrlokans.lesson3;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 // Lesson 3. B_Huffman.
@@ -51,9 +53,30 @@ public class B_Huffman {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
 
+        // Code => Character
+        Map<String, Character> codes = new HashMap<String, Character>();
+        int i = 0;
+        while (i < count){
+            Character ch = scanner.next().charAt(0);
+            String code = scanner.next();
+            codes.put(code, ch);
+            i++;
+        }
 
+        String encodedString = scanner.next();
 
+        int k = 0;
+        while (k < encodedString.length()){
+            int offset = 1;
 
+            String substr = encodedString.substring(k, k + offset);
+            while (!codes.containsKey(substr)){
+                offset++;
+                substr = encodedString.substring(k, k + offset);
+            }
+            result.append(codes.get(encodedString.substring(k, k + offset)));
+            k += offset;
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         return result.toString(); //01001100100111
     }
