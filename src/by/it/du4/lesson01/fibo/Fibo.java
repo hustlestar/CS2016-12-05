@@ -1,4 +1,4 @@
-package by.it.du4.lesson1.fibo;
+package by.it.du4.lesson01.fibo;
 
 import java.math.BigInteger;
 
@@ -86,8 +86,11 @@ public class Fibo {
         BigInteger bigIntegerF1 = BigInteger.ZERO;
         BigInteger bigIntegerF2 = BigInteger.ONE;
         BigInteger tmpBigInteger;
+//        boolean flag = false;
 
         for (int i = 2 ; i <= n ; i++){
+
+//            if (flag) bigIntegerF2 = bigIntegerF2.add(bigIntegerF1);
             tmpBigInteger = bigIntegerF2;
             bigIntegerF2 = bigIntegerF2.add(bigIntegerF1);
             bigIntegerF1 = tmpBigInteger;

@@ -1,4 +1,4 @@
-package by.it.du4.lesson3;
+package by.it.du4.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -62,7 +62,7 @@ public class B_Huffman {
             if(!line.isEmpty()) {
                 if (line.contains(":")) {
                     data = line.split(": ");
-                    codes.put(data[1], data[0].charAt(0));
+                    codes.put(data[1].trim(), data[0].trim().charAt(0));
                 }else {
                     stringOfBit = line;
                 }

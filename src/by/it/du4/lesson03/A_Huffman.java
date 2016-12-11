@@ -1,4 +1,4 @@
-package by.it.du4.lesson3;
+package by.it.du4.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -113,7 +113,17 @@ public class A_Huffman {
 
     String encode(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
-        String s = scanner.next();
+
+        if (!scanner.hasNext()){
+            throw new IllegalArgumentException("Empty file");
+        }
+
+        String s = scanner.next().trim().toLowerCase();
+
+        if (s.length() == 1){
+            codes.put(s.charAt(0), "0");
+            return "0";
+        }
 
         Map<Character, Integer> mapOfCharFrequencies = new HashMap<>();
         //1. переберем все символы по очереди и рассчитаем их частоту в Map mapOfCharFrequencies
@@ -135,7 +145,8 @@ public class A_Huffman {
         //и возвращая этого родителя обратно в очередь
         //построим дерево кодирования Хаффмана.
         //У родителя частоты детей складываются.
-        int queueSize = priorityQueue.size()-1;
+
+        int queueSize = priorityQueue.size() - 1;
         for (int i = 0; i < queueSize; i++) {
             priorityQueue.offer(new InternalNode(priorityQueue.poll(), priorityQueue.poll()));
         }
@@ -159,11 +170,11 @@ public class A_Huffman {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelov/lesson03/dataHuffman.txt");
+        File f = new File(root + "by/it/du4/lesson03/dataHuffman.txt");
         A_Huffman instance = new A_Huffman();
-        long startTime = System.currentTimeMillis();
+//        long startTime = System.currentTimeMillis();
         String result = instance.encode(f);
-        long finishTime = System.currentTimeMillis();
+//        long finishTime = System.currentTimeMillis();
         System.out.printf("%d %d\n", codes.size(), result.length());
         for (Map.Entry<Character, String> entry : codes.entrySet()) {
             System.out.printf("%s: %s\n", entry.getKey(), entry.getValue());

@@ -1,4 +1,4 @@
-package by.it.du4.lesson1.fibo;
+package by.it.du4.lesson01.fibo;
 
 import org.junit.Test;
 

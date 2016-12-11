@@ -1,4 +1,4 @@
-package by.it.du4.lesson3;
+package by.it.du4.lesson03;
 
 import org.junit.Test;
 

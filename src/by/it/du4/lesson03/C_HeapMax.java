@@ -1,11 +1,9 @@
-package by.it.du4.lesson3;
+package by.it.du4.lesson03;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 // Lesson 3. C_Heap.
 // Задача: построить max-кучу = пирамиду = бинарное сбалансированное дерево на массиве.
@@ -43,24 +41,91 @@ public class C_HeapMax {
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
         private List<Long> heap = new ArrayList<>();
 
-        int siftDown(int i) { //просеивание вверх
+        int siftDown(int i) { //просеивание вниз
+            int leftChildIndex , rightChildIndex, largestIndex;
+            long tmpLong;
+//          while have left child
+            while (2*i+1 < heap.size()){
 
+                leftChildIndex = 2*i+1;
+                rightChildIndex = 2*i+2;
+                largestIndex = i;
+
+                if (leftChildIndex < heap.size() && heap.get(leftChildIndex) > heap.get(largestIndex)){
+//                if (leftChildIndex < heap.size() && heap.get(leftChildIndex).compareTo(heap.get(largestChildIndex)) > 0){
+                    largestIndex = leftChildIndex;
+                }
+                if (rightChildIndex < heap.size() && heap.get(rightChildIndex) > heap.get(largestIndex)){
+//                if (rightChildIndex < heap.size() && heap.get(rightChildIndex).compareTo(heap.get(largestChildIndex)) > 0){
+                    largestIndex = rightChildIndex;
+                }
+                if (largestIndex <= i){
+                    break;
+                }
+//              swap max largestChild & current
+                tmpLong = heap.get(largestIndex);
+                heap.set(largestIndex, heap.get(i));
+                heap.set(i, tmpLong);
+
+                i = largestIndex;
+            }
             return i;
         }
 
-        int siftUp(int i) { //просеивание вниз
+        int siftUp(int i) { //просеивание вверх
+            int parentIndex = (i-1)/2;
+            while (i > 0 && heap.get(parentIndex).compareTo(heap.get(i)) < 0){
+                long tmp = heap.get(i);
+                heap.set(i, heap.get(parentIndex));
+                heap.set(parentIndex,tmp);
 
+                i = parentIndex;
+                parentIndex = (i - 1) / 2;
+            }
             return i;
         }
 
         void insert(Long value) { //вставка
+            heap.add(value);
+            siftUp(heap.size()-1);
         }
 
         Long extractMax() { //извлечение и удаление максимума
+            Long result = heap.get(0);
+            heap.set(0, heap.remove(heap.size()-1));
+            siftDown(0);
+            return result;
+        }
+
+        public void createHeap(Long [] sourceArray){
+            heap = new ArrayList<>(Arrays.asList(sourceArray));
+            int heapSize = sourceArray.length;
+            for (int i = heapSize / 2; i >= 0; i--){
+                siftDown(i);
+            }
+        }
+
+        Long getMin(){
             Long result = null;
 
             return result;
         }
+
+        void changePriority(int index, Long priority){
+            if (heap.get(index).equals(priority)){
+                return;
+            }
+
+            heap.set(index, priority);
+            if (heap.get(index/2).compareTo(priority) < 0){
+                siftUp(index);
+            }else{
+                siftDown(index);
+            }
+
+
+        }
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
     }
 
@@ -92,7 +157,7 @@ public class C_HeapMax {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson03/heapData.txt");
+        InputStream stream = new FileInputStream(root + "by/it/du4/lesson03/heapData.txt");
         C_HeapMax instance = new C_HeapMax();
         System.out.println("MAX="+instance.findMaxValue(stream));
     }

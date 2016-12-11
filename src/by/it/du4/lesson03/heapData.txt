@@ -1,7 +1,10 @@
-6
+9
 Insert 200
+Insert 220
+Insert 0
 Insert 10
 ExtractMax
 Insert 5
 Insert 500
+Insert -100
 ExtractMax
