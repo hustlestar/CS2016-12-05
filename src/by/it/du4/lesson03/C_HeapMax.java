@@ -35,15 +35,19 @@ import java.util.*;
 
 public class C_HeapMax {
 
-    private class MaxHeap {
+    private class MaxHeap <T extends Comparable<? super T>> {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение.
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
         private List<Long> heap = new ArrayList<>();
 
+        public List<Long> getHeap() {
+            return heap;
+        }
+
         int siftDown(int i) { //просеивание вниз
             int leftChildIndex , rightChildIndex, largestIndex;
-            long tmpLong;
+            Long tmp;
 //          while have left child
             while (2*i+1 < heap.size()){
 
@@ -51,21 +55,19 @@ public class C_HeapMax {
                 rightChildIndex = 2*i+2;
                 largestIndex = i;
 
-                if (leftChildIndex < heap.size() && heap.get(leftChildIndex) > heap.get(largestIndex)){
-//                if (leftChildIndex < heap.size() && heap.get(leftChildIndex).compareTo(heap.get(largestChildIndex)) > 0){
+                if (leftChildIndex < heap.size() && heap.get(leftChildIndex).compareTo(heap.get(largestIndex)) > 0){
                     largestIndex = leftChildIndex;
                 }
-                if (rightChildIndex < heap.size() && heap.get(rightChildIndex) > heap.get(largestIndex)){
-//                if (rightChildIndex < heap.size() && heap.get(rightChildIndex).compareTo(heap.get(largestChildIndex)) > 0){
+                if (rightChildIndex < heap.size() && heap.get(rightChildIndex).compareTo(heap.get(largestIndex)) > 0){
                     largestIndex = rightChildIndex;
                 }
                 if (largestIndex <= i){
                     break;
                 }
 //              swap max largestChild & current
-                tmpLong = heap.get(largestIndex);
+                tmp = heap.get(largestIndex);
                 heap.set(largestIndex, heap.get(i));
-                heap.set(i, tmpLong);
+                heap.set(i, tmp);
 
                 i = largestIndex;
             }
@@ -91,9 +93,16 @@ public class C_HeapMax {
         }
 
         Long extractMax() { //извлечение и удаление максимума
-            Long result = heap.get(0);
-            heap.set(0, heap.remove(heap.size()-1));
-            siftDown(0);
+            return extract(0);
+        }
+
+        Long extract(int index){
+            if (heap.size()-1 < index){
+                throw new IndexOutOfBoundsException(this.toString()+"(heap.size()="+heap.size()+", index="+index+")");
+            }
+            Long result = heap.get(index);
+            heap.set(index, Long.MIN_VALUE);
+            heap.remove(siftDown(index));
             return result;
         }
 
@@ -105,27 +114,17 @@ public class C_HeapMax {
             }
         }
 
-        Long getMin(){
-            Long result = null;
-
-            return result;
-        }
-
         void changePriority(int index, Long priority){
             if (heap.get(index).equals(priority)){
                 return;
             }
-
             heap.set(index, priority);
             if (heap.get(index/2).compareTo(priority) < 0){
                 siftUp(index);
             }else{
                 siftDown(index);
             }
-
-
         }
-
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
     }
 
@@ -138,20 +137,28 @@ public class C_HeapMax {
         Integer count = scanner.nextInt();
         for (int i = 0; i < count; ) {
             String s = scanner.nextLine();
-            if (s.equalsIgnoreCase("extractMax")) {
-                Long res=heap.extractMax();
-                if (res!=null && res>maxValue) maxValue=res;
-                System.out.println();
+            String[] strings = s.split(" ");
+            if (strings.length == 2) {
+                switch (strings[0].toLowerCase().trim()) {
+                    case "extract":
+                        Long res = heap.extract(Integer.parseInt(strings[1].trim()));
+                        if (res != null && res > maxValue) maxValue = res;
+//                        System.out.println("Extracted="+res);
+                        break;
+                    case "insert":
+                        heap.insert(Long.parseLong(strings[1].trim()));
+                        break;
+                    case "change":
+                        heap.changePriority(Integer.parseInt(strings[1].trim()), -200L);
+                        break;
+                    default:
+                }
                 i++;
-            }
-            if (s.contains(" ")) {
-                String[] p = s.split(" ");
-                if (p[0].equalsIgnoreCase("insert"))
-                    heap.insert(Long.parseLong(p[1]));
-                i++;
-            //System.out.println(heap); //debug
             }
         }
+//        for (int i = 0; i < heap.getHeap().size(); i++) {
+//            System.out.print(heap.getHeap().get(i)+" \n");
+//        }
         return maxValue;
     }
 
@@ -167,3 +174,5 @@ public class C_HeapMax {
     // "В реальном бою" все существенно иначе. Изучите и используйте коллекции
     // TreeSet, TreeMap, PriorityQueue и т.д. с нужным CompareTo() для объекта внутри.
 }
+
+
