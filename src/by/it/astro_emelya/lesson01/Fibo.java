@@ -53,7 +53,7 @@ public class Fibo {
     }
 
     BigInteger fastB(Integer n) {
-        
+
         BigInteger[] bigInteger = new BigInteger[n + 1];
 
         if (n == 0)
