@@ -125,7 +125,15 @@ public class A_Huffman {
 
         //2. перенесем все символы в приоритетную очередь в виде листьев
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
+for (Map.Entry<Character, Integer> entry:count.entrySet ()) {
+    Character ch = entry.getValue();
+    Integer f = entry.getValue();
+    LeafNode leafNode = new LeafNode(f, ch);
+    priorityQueue.add(leafNode);
+}
+while (priorityQueue.size() > 1) {
 
+}
         //3. вынимая по два узла из очереди (для сборки родителя)
         //и возвращая этого родителя обратно в очередь
         //построим дерево кодирования Хаффмана.

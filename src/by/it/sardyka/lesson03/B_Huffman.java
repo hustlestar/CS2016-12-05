@@ -2,6 +2,7 @@ package by.it.sardyka.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Map;
 import java.util.Scanner;
 
 // Lesson 3. B_Huffman.
@@ -50,9 +51,24 @@ public class B_Huffman {
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
-
-
-
+    Map<String, Character> map = new Map<String, Character>();
+    for (int i =0; i < count; ) {
+    String s = scanner.nextLine();
+    if ( s.contains(": ")) {
+        String[] p = s.split(": ");
+        map.put (p[1], p[0].charAt(0));
+        i++;
+    }
+}
+    String s =scanner.nextLine();
+    StringBuilder code = new StringBuilder("");
+    for (char ch:s.toCharArray()) {
+        code.append(ch);
+        if (map.containsKey(code.toString())) {
+            result.append(map.get(code));
+            code.delete(0, code.length());
+        }
+    }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         return result.toString(); //01001100100111
