@@ -41,25 +41,51 @@ public class C_HeapMax {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение.
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
-        private List<Long> heap = new ArrayList<>();
+        private List<Long> myTree = new ArrayList<>();
 
         int siftDown(int i) { //просеивание вверх
+
+            while ((2 * i + 1) < myTree.size()) {
+                int left = 2 * i + 1;
+                int right = 2 * i + 2;
+                int temp = left;
+                if (right < myTree.size() && myTree.get(right) < myTree.get(left)) {
+                    temp = right;
+                }
+                if (myTree.get(i) > myTree.get(temp)) {
+                    long temp2 = myTree.get(i);
+                    myTree.set(i, myTree.get(temp));
+                    myTree.set(temp, temp2);
+                }
+                i = temp;
+            }
 
             return i;
         }
 
         int siftUp(int i) { //просеивание вниз
-
+            while (i > 0) {
+                int parent = (i - 1) / 2;
+                if (parent >= 0 && myTree.get(parent) < myTree.get(i)) {
+                    long temp = myTree.get(i);
+                    myTree.set(i, myTree.get(parent));
+                    myTree.set(parent, temp);
+                }
+                i = parent;
+            }
             return i;
         }
 
         void insert(Long value) { //вставка
+            myTree.add(value);
+            siftUp(myTree.size() - 1);
         }
 
         Long extractMax() { //извлечение и удаление максимума
-            Long result = null;
-
+            Long result = myTree.remove(0);
+            siftDown(0);
             return result;
+
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
     }
