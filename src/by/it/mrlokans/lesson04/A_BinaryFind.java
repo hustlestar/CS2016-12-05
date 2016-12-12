@@ -27,6 +27,28 @@ import java.util.Scanner;
 */
 
 public class A_BinaryFind {
+
+    int binarySearch(int[] inputArray, int searchItem){
+        if (inputArray.length == 0){
+            return -1;
+        }
+        int leftBorder = 0;
+        int rightBorder = inputArray.length - 1;
+
+        while (leftBorder <= rightBorder){
+            int mediumIndex = (leftBorder + rightBorder) / 2;
+            int mediumElement = inputArray[mediumIndex];
+            if (mediumElement == searchItem){
+                return mediumIndex + 1;
+            } else if (mediumElement > searchItem){
+                rightBorder = mediumIndex - 1;
+            } else {
+                leftBorder = mediumIndex + 1;
+            }
+        }
+        return -1;
+    }
+
     int[] findIndex(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -47,10 +69,7 @@ public class A_BinaryFind {
             int value = scanner.nextInt();
             //тут реализуйте бинарный поиск индекса
 
-
-
-
-            result[i]=0;
+            result[i] = binarySearch(a, value);
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
