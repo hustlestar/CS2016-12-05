@@ -48,9 +48,6 @@ public class C_GreedyKnapsack {
         System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n", n, W);
 
         Arrays.sort(items, Item::compareTo);
-        for (Item item : items) {
-            System.out.println(item);
-        }
         double knapsackWeightCounter = 0;
         double result = 0;
         for (int i = 0; i < items.length; i++) {
