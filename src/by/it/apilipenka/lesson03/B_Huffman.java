@@ -44,8 +44,16 @@ import java.util.Scanner;
 
 public class B_Huffman {
 
+    public static void main(String[] args) throws FileNotFoundException {
+        String root = System.getProperty("user.dir") + "/src/";
+        File f = new File(root + "by/it/a_khmelov/lesson03/encodeHuffman.txt");
+        B_Huffman instance = new B_Huffman();
+        String result = instance.decode(f);
+        System.out.println(result);
+    }
+
     String decode(File file) throws FileNotFoundException {
-        StringBuilder result=new StringBuilder();
+        StringBuilder result = new StringBuilder();
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(file);
         Integer count = scanner.nextInt();
@@ -53,36 +61,28 @@ public class B_Huffman {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
 
-        Map<String,Character> codes = new HashMap<>();
+        Map<String, Character> codes = new HashMap<>();
 
-        for (int i=0; i<count; i++) {
+        for (int i = 0; i < count; i++) {
             char c = scanner.next().charAt(0);
-            String code = scanner.next() ;
-            codes.put(code,c);
+            String code = scanner.next();
+            codes.put(code, c);
         }
         String s = scanner.next();
 
-        int i=0;
-        while (i<length) {
-            int subLength=1;
-            String subStr=s.substring(i,i+subLength);
+        int i = 0;
+        while (i < length) {
+            int subLength = 1;
+            String subStr = s.substring(i, i + subLength);
             while (!codes.containsKey(subStr)) {
                 subLength++;
-                subStr=s.substring(i,i+subLength);
+                subStr = s.substring(i, i + subLength);
             }
             result.append(codes.get(subStr));
-            i+=subLength;
+            i += subLength;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         return result.toString(); //01001100100111
-    }
-
-    public static void main(String[] args) throws FileNotFoundException {
-        String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelov/lesson03/encodeHuffman.txt");
-        B_Huffman instance = new B_Huffman();
-        String result = instance.decode(f);
-        System.out.println(result);
     }
 
 

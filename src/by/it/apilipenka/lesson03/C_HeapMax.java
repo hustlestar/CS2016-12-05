@@ -37,45 +37,25 @@ import java.util.Scanner;
 
 public class C_HeapMax {
 
-    private class MaxHeap {
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        //тут запишите ваше решение.
-        //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
-        private List<Long> heap = new ArrayList<>();
-
-        int siftDown(int i) { //просеивание вверх
-
-            return i;
-        }
-
-        int siftUp(int i) { //просеивание вниз
-
-            return i;
-        }
-
-        void insert(Long value) { //вставка
-        }
-
-        Long extractMax() { //извлечение и удаление максимума
-            Long result = null;
-
-            return result;
-        }
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+    public static void main(String[] args) throws FileNotFoundException {
+        String root = System.getProperty("user.dir") + "/src/";
+        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson03/heapData.txt");
+        C_HeapMax instance = new C_HeapMax();
+        System.out.println("MAX=" + instance.findMaxValue(stream));
     }
 
     //эта процедура читает данные из файла, ее можно не менять.
     Long findMaxValue(InputStream stream) {
-        Long maxValue=0L;
-        MaxHeap heap = new MaxHeap();
+        Long maxValue = 0L;
+        Heap<Long> heap = new Heap<>();
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(stream);
         Integer count = scanner.nextInt();
         for (int i = 0; i < count; ) {
             String s = scanner.nextLine();
             if (s.equalsIgnoreCase("extractMax")) {
-                Long res=heap.extractMax();
-                if (res!=null && res>maxValue) maxValue=res;
+                Long res = heap.extractMax();
+                if (res != null && res > maxValue) maxValue = res;
                 System.out.println();
                 i++;
             }
@@ -84,21 +64,146 @@ public class C_HeapMax {
                 if (p[0].equalsIgnoreCase("insert"))
                     heap.insert(Long.parseLong(p[1]));
                 i++;
-            //System.out.println(heap); //debug
+                // System.out.println(heap); //debug
             }
         }
         return maxValue;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson03/heapData.txt");
-        C_HeapMax instance = new C_HeapMax();
-        System.out.println("MAX="+instance.findMaxValue(stream));
-    }
 
     // РЕМАРКА. Это задание исключительно учебное.
     // Свои собственные кучи нужны довольно редко.
     // "В реальном бою" все существенно иначе. Изучите и используйте коллекции
     // TreeSet, TreeMap, PriorityQueue и т.д. с нужным CompareTo() для объекта внутри.
 }
+
+class Heap<T extends Comparable<T>> {
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+    //тут запишите ваше решение.
+    //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
+
+    // parameter: true - Max Heap; false - Min Heap
+    private boolean isMaxHeap;
+    private List<T> heap = new ArrayList<>();
+
+    Heap() {
+        this.isMaxHeap = true;
+    }
+
+    Heap(boolean isMaxHeap) {
+        this.isMaxHeap = isMaxHeap;
+    }
+
+
+    private void siftDown(int i) {
+        if (heap.size() < 2) return;
+        int j;
+        int n = i;
+        if (isMaxHeap) {
+
+
+            while (n < heap.size()) {
+
+                if (heap.size() - 1 > 2 * n + 1)
+                    j = heap.get(2 * n + 1).compareTo(heap.get(2 * n + 2)) > 0 ? 2 * i + 1 : 2 * i + 2;
+                else if (heap.size() - 1 > 2 * n) j = 2 * n + 1;
+                else return;
+                if (heap.get(n).compareTo(heap.get(j)) < 0) {
+                    T temp = heap.get(n);
+                    heap.set(n, heap.get(j));
+                    heap.set(j, temp);
+                    n = j;
+                } else
+                    return;
+
+
+            }
+        } else {
+            if (heap.size() - 1 > 2 * n + 1)
+                j = heap.get(2 * n + 1).compareTo(heap.get(2 * n + 2)) < 0 ? 2 * i + 1 : 2 * i + 2;
+            else if (heap.size() - 1 > 2 * n) j = 2 * n + 1;
+            else return;
+
+            while (n < heap.size()) {
+
+                if (heap.get(n).compareTo(heap.get(j)) > 0) {
+                    T temp = heap.get(n);
+                    heap.set(n, heap.get(j));
+                    heap.set(j, temp);
+                    n = j;
+                } else
+                    return;
+
+
+            }
+        }
+    }
+
+    private void siftUp(int i) { //просеивание вверх
+        if (heap.size() < 2) return;
+        int j = (i - 1) / 2;
+        int n = i;
+        if (isMaxHeap)
+            while (n > 0 && heap.get(n).compareTo(heap.get(j)) > 0) {
+                T temp = heap.get(n);
+                heap.set(n, heap.get(j));
+                heap.set(j, temp);
+                n = j;
+                j = (n - 1) / 2;
+
+            }
+        else
+            while (n > 0 && heap.get(n).compareTo(heap.get(j)) < 0) {
+                T temp = heap.get(n);
+                heap.set(n, heap.get(j));
+                heap.set(j, temp);
+                n = j;
+                j = (n - 1) / 2;
+
+            }
+
+    }
+
+    void insert(T value) {
+        heap.add(value);
+        siftUp(heap.size() - 1);
+    }
+
+
+    void add(T value) {
+        insert(value);
+    }
+
+    T extractMax() { //извлечение и удаление максимума
+
+        if (heap.size() == 0) return null;
+        T result = heap.get(0);
+        heap.set(0, heap.get(heap.size() - 1));
+        heap.remove(heap.size() - 1);
+        siftDown(0);
+        return result;
+
+    }
+
+    T poll() { //извлечение и удаление максимума
+
+        return extractMax();
+
+    }
+
+    T peek() { //извлечение и удаление максимума
+
+        if (heap.size() == 0) return null;
+        return heap.get(0);
+
+    }
+
+    long size() {
+        return heap.size();
+    }
+
+
+}
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
