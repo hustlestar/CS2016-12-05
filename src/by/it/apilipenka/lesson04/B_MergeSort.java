@@ -91,6 +91,14 @@ public class B_MergeSort {
 
     private int[] mergeSort(int[] a) {
         if (a.length == 1) return a;
+        if (a.length == 2) {
+            if (a[0] > a[1]) {
+                int temp = a[0];
+                a[0] = a[1];
+                a[1] = temp;
+            }
+            return a;
+        }
         int[] a1 = new int[(int) Math.floor(a.length / 2)];
         int i = 0;
         while (i < a.length && i < a1.length) {
