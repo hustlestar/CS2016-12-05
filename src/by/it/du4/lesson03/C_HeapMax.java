@@ -142,7 +142,7 @@ public class C_HeapMax {
                     case "extract":
                         Long res = heap.extract(Integer.parseInt(strings[1].trim()));
                         if (res != null && res > maxValue) maxValue = res;
-                        System.out.println("Extracted="+res);
+//                        System.out.println("Extracted="+res);
                         break;
                     case "insert":
                         heap.insert(Long.parseLong(strings[1].trim()));
@@ -155,9 +155,9 @@ public class C_HeapMax {
                 i++;
             }
         }
-        for (int i = 0; i < heap.getHeap().size(); i++) {
-            System.out.print(heap.getHeap().get(i)+" \n");
-        }
+//        for (int i = 0; i < heap.getHeap().size(); i++) {
+//            System.out.print(heap.getHeap().get(i)+" \n");
+//        }
         return maxValue;
     }
 
