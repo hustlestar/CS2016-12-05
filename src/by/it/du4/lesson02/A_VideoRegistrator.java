@@ -1,8 +1,7 @@
-package by.it.du4.lesson2;
+package by.it.du4.lesson02;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class A_VideoRegistrator {

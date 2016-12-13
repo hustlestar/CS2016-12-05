@@ -1,0 +1,14 @@
+13
+Insert 200
+Insert 220
+Insert 0
+Insert 10
+Extract 0
+Insert 5
+Insert 230
+Insert 500
+Extract 3
+Insert -100
+Change 2
+Insert -22
+Extract 0

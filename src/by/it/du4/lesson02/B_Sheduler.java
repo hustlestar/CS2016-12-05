@@ -1,4 +1,4 @@
-package by.it.du4.lesson2;
+package by.it.du4.lesson02;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,10 +41,13 @@ public class B_Sheduler {
         List<Event> result = new ArrayList<>();
         //events - события которые нужно распределить в аудитории
 
-        Arrays.sort(events, (o1, o2) -> {
-            if(o1.stop < o2.stop)return -1;
-            if(o1.stop == o2.stop)return 0;
-            else return 1;
+        Arrays.sort(events, new Comparator<Event>() {
+            @Override
+            public int compare(Event o1, Event o2) {
+                if (o1.stop < o2.stop) return -1;
+                if (o1.stop == o2.stop) return 0;
+                else return 1;
+            }
         });
 
 

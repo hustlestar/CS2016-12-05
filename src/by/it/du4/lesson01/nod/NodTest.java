@@ -1,4 +1,4 @@
-package by.it.du4.lesson1.nod;
+package by.it.du4.lesson01.nod;
 
 import org.junit.Test;
 
