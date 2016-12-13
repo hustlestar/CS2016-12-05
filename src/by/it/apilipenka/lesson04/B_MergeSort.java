@@ -91,6 +91,7 @@ public class B_MergeSort {
 
     private int[] mergeSort(int[] a) {
         if (a.length == 1) return a;
+<<<<<<< HEAD
         if (a.length == 2) {
             if (a[0] > a[1]) {
                 int temp = a[0];
@@ -99,6 +100,8 @@ public class B_MergeSort {
             }
             return a;
         }
+=======
+>>>>>>> origin/master
         int[] a1 = new int[(int) Math.floor(a.length / 2)];
         int i = 0;
         while (i < a.length && i < a1.length) {
