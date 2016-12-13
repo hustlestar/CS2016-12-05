@@ -52,6 +52,8 @@ public class A_BinaryFind {
             a[i - 1] = scanner.nextInt();
         }
 
+
+
         //размер массива индексов
         int k = scanner.nextInt();
         int[] result = new int[k];
@@ -60,10 +62,21 @@ public class A_BinaryFind {
             //тут реализуйте бинарный поиск индекса
 
 
-            result[i] = 0;
+
+            result[i] = binarySearch(a, 0, a.length-1, value);
         }
+
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    private int binarySearch(int[] a, int start, int end, int itm) {
+        int n = start + (end - start)/2;
+        if (itm==a[n]) return n+1;
+        if (start==end) return -1;
+        if (itm<a[n]) return binarySearch(a, start, n, itm);
+        return binarySearch(a, n+1, end, itm);
     }
 
 }
