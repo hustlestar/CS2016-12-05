@@ -19,6 +19,7 @@ Sample Input:
 Sample Output:
 2 2 3 9 9
 */
+
 public class B_MergeSort {
 
     public static void main(String[] args) throws FileNotFoundException {
