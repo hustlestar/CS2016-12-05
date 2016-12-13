@@ -31,6 +31,7 @@ public class B_MergeSort {
         for (int index : result) {
             System.out.print(index + " ");
         }
+
     }
 
     int[] getMergeSort(InputStream stream) throws FileNotFoundException {
@@ -49,9 +50,57 @@ public class B_MergeSort {
         // https://ru.wikipedia.org/wiki/Сортировка_слиянием
 
 
+        a = mergeSort(a);
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return a;
     }
 
+    private int[] merge(int[] a, int[] b) {
+        int[] c = new int[a.length + b.length];
+
+        int i = 0;
+        int j = 0;
+        int k = 0;
+
+        while (i < a.length && j < b.length) {
+            if (a[i] > b[j]) {
+                c[k] = b[j];
+                j++;
+
+            } else {
+                c[k] = a[i];
+                i++;
+            }
+            k++;
+        }
+        while (i < a.length) {
+            c[k] = a[i];
+            i++;
+            k++;
+        }
+        while (j < b.length) {
+            c[k] = b[j];
+            j++;
+            k++;
+        }
+        return c;
+    }
+
+
+    private int[] mergeSort(int[] a) {
+        if (a.length == 1) return a;
+        int[] a1 = new int[(int) Math.floor(a.length / 2)];
+        int i = 0;
+        while (i < a.length && i < a1.length) {
+            a1[i] = a[i++];
+        }
+        int[] a2 = new int[a.length - (int) Math.floor(a.length / 2)];
+        int k = 0;
+        while (i < a.length) {
+            a2[k++] = a[i++];
+        }
+        return merge(mergeSort(a1), mergeSort(a2));
+    }
 
 }
