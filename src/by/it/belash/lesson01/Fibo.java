@@ -1,10 +1,9 @@
-package by.it.belash_ea.lesson01;
+package by.it.belash.lesson01;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /*
- * Вам необходимо выполнить три способа вычисления чисел Фибоначчи
+ * Вам необходимо выполнить три способа вычисления чисел Фибоначчи.
  */
 public class Fibo {
 
@@ -97,7 +96,6 @@ public class Fibo {
 
         //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
         //вариант, какой только сумеете
-        //Необходима доработка
         return fastB(n);
     }
 

@@ -1,4 +1,4 @@
-package by.it.belash_ea.lesson01;
+package by.it.belash.lesson01;
 
 import org.junit.Test;
 
@@ -10,11 +10,11 @@ public class FiboTest {
     /*
     для прохождения тестов создайте JUnit-конфигурацию на свой пакет:
     Поля:
-    Test kind: All in package
-    Package: by.it.belash_ea (тут ваша фамилия)
-    Search for test: In whole project
+    Name:               Test a_khmelov (тут ваша фамилия)
+    Test kind:          All in package
+    Package:            by.it.a_khmelov (тут ваша фамилия)
+    Search for test:    In whole project
     */
-
 
     @Test(timeout = 2000)
     public void slowA() throws Exception {
