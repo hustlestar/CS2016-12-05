@@ -136,9 +136,9 @@ public class A_Huffman {
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
 
         for (Map.Entry<Character, Integer> entry: mapOfCharFrequencies.entrySet()) {
-             if(!priorityQueue.offer(new LeafNode(entry.getValue(), entry.getKey()))){
-                 throw new IllegalArgumentException("Can't add new LeafNode("+entry.getValue()+","+entry.getKey()+") to priorityQueue");
-             }
+            if(!priorityQueue.offer(new LeafNode(entry.getValue(), entry.getKey()))){
+                throw new IllegalArgumentException("Can't add new LeafNode("+entry.getValue()+","+entry.getKey()+") to priorityQueue");
+            }
         }
 
         //3. вынимая по два узла из очереди (для сборки родителя)
