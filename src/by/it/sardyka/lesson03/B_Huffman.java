@@ -2,6 +2,7 @@ package by.it.sardyka.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -44,35 +45,35 @@ import java.util.Scanner;
 public class B_Huffman {
 
     String decode(File file) throws FileNotFoundException {
-        StringBuilder result=new StringBuilder();
+        StringBuilder result = new StringBuilder();
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(file);
         Integer count = scanner.nextInt();
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
-    Map<String, Character> map = new Map<String, Character>();
-    for (int i =0; i < count; ) {
-    String s = scanner.nextLine();
-    if ( s.contains(": ")) {
-        String[] p = s.split(": ");
-        map.put (p[1], p[0].charAt(0));
-        i++;
-    }
-}
-    String s =scanner.nextLine();
-    StringBuilder code = new StringBuilder("");
-    for (char ch:s.toCharArray()) {
-        code.append(ch);
-        if (map.containsKey(code.toString())) {
-            result.append(map.get(code));
-            code.delete(0, code.length());
+        Map<String, Character> map = new HashMap<>();
+        for (int i = 0; i < count;) {
+            String s = scanner.nextLine();
+            if (s.contains(": ")) {
+                String[] p = s.split(": ");
+                map.put(p[1], p[0].charAt(0));
+                i++;
+            }
         }
-    }
+        String s = scanner.nextLine();
+        StringBuilder code = new StringBuilder("");
+        for (char ch : s.toCharArray()) {
+            code.append(ch);
+            if (map.containsKey(code.toString())) {
+                result.append(map.get(code.toString()));
+                code.delete(0, code.length());
+            }
 
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        return result.toString(); //01001100100111
-    }
+        }
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+            return result.toString(); //01001100100111
+        }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
