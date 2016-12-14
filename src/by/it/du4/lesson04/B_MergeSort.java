@@ -3,6 +3,7 @@ package by.it.du4.lesson04;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -31,30 +32,41 @@ public class B_MergeSort {
         for (int i = 1; i <= n; i++) {
             a[i-1] = scanner.nextInt();
         }
-        // тут ваше решение (реализуйте сортировку слиянием)
-        // https://ru.wikipedia.org/wiki/Сортировка_слиянием
         mergeSort(a, 0, a.length-1);
-
-
-
-
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return a;
     }
 
-    private static int[] mergeSort(int[] array, int l, int r){
-        if (l < r){
-            int splitter = (l+r)/2;
-            merge(mergeSort(array, l, splitter), mergeSort(array, splitter+1, r));
+    private static void mergeSort(int[] array, int l, int r) {
+
+        if (r <= l) {
+            return;
         }
-        return array;
+        int mid = l + (r - l) / 2;
+        mergeSort(array, l, mid);
+        mergeSort(array, mid + 1, r);
+
+        int[] tmpBuf = Arrays.copyOf(array, array.length);
+
+        System.arraycopy(array, l, tmpBuf, l, r + 1 - l);
+
+        int i = l, j = mid + 1;
+        for (int k = l; k <= r; k++) {
+            if (i > mid) {
+                array[k] = tmpBuf[j];
+                j++;
+            } else if (j > r) {
+                array[k] = tmpBuf[i];
+                i++;
+            } else if (tmpBuf[j] < tmpBuf[i]) {
+                array[k] = tmpBuf[j];
+                j++;
+            } else {
+                array[k] = tmpBuf[i];
+                i++;
+            }
+        }
     }
-
-    private static void  merge(int[] left, int [] right){
-
-    }
-
-
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
