@@ -51,23 +51,22 @@ public class B_Huffman {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
         Map<String, Character> map = new HashMap<>();
-        for (int i = 0; i < count;){
-            String s=scanner.nextLine();
-            if(s.contains(": ")){
-                String[] p=s.split(": ");
-                map.put(p[1], p[0].charAt(0));
-                i++;
-            }
-        }
+        for (int i = 0; i < count; i++){
 
-        String s=scanner.nextLine();
-        String code = "";
-        for(char ch:s.toCharArray()){
-            code = code + ch;
-            if(map.containsKey(code.toString())){
-                char resultch=map.get(code);
-                result.append(resultch);
-                code = "";
+            char ch = scanner.next().charAt(0);
+            String code = scanner.next();
+            map.put(code, ch);
+        }
+        System.out.println(map);
+
+
+        String s=scanner.next();
+        String encode = "";
+        for (int i = 0; i < s.length(); i++){
+            encode = encode + s.charAt(i);
+            if (map.containsKey(encode)) {
+                result.append(map.get(encode));
+                encode = "";
             }
         }
 
