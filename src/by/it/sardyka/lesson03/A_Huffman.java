@@ -1,4 +1,4 @@
-package by.it.du4.lesson03;
+package by.it.sardyka.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -45,22 +45,22 @@ public class A_Huffman {
         //абстрактный класс элемент дерева
         //(сделан abstract, чтобы нельзя было использовать его напрямую)
         //а только через его версии InternalNode и LeafNode
-        private final int frequency; //частота символов
+        private final int frequence; //частота символов
 
         //генерация кодов (вызывается на корневом узле
         //один раз в конце, т.е. после построения дерева)
         abstract void fillCodes(String code);
 
         //конструктор по умолчанию
-        private Node(int frequency) {
-            this.frequency = frequency;
+        private Node(int frequence) {
+            this.frequence = frequence;
         }
 
         //метод нужен для корректной работы узла в приоритетной очереди
         //или для сортировок
         @Override
         public int compareTo(Node o) {
-            return Integer.compare(frequency, o.frequency);
+            return Integer.compare(frequence, o.frequence);
         }
     }
 
@@ -74,7 +74,7 @@ public class A_Huffman {
         //для этого дерева не существует внутренних узлов без обоих детей
         //поэтому вот такого конструктора будет достаточно
         InternalNode(Node left, Node right) {
-            super(left.frequency + right.frequency);
+            super(left.frequence + right.frequence);
             this.left = left;
             this.right = right;
         }
@@ -93,8 +93,8 @@ public class A_Huffman {
         //лист
         char symbol; //символы хранятся только в листах
 
-        LeafNode(int frequency, char symbol) {
-            super(frequency);
+        LeafNode(int frequence, char symbol) {
+            super(frequence);
             this.symbol = symbol;
         }
 
@@ -104,62 +104,60 @@ public class A_Huffman {
             //и можно запомнить его в индексе для поиска кода по символу.
             codes.put(this.symbol, code);
         }
-
     }
 
     //индекс данных из листьев
     static private Map<Character, String> codes = new TreeMap<>();
 
 
+    //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
     String encode(File file) throws FileNotFoundException {
+        //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(file);
+        String s = scanner.next();
 
-        if (!scanner.hasNext()){
-            throw new IllegalArgumentException("Empty file");
+        //все комментарии от тестового решения были оставлены т.к. это задание A.
+        //если они вам мешают их можно удалить
+
+        Map<Character, Integer> count = new HashMap<>();
+        //1. переберем все символы по очереди и рассчитаем их частоту в Map count
+            //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
+    for(int i = 0; i < s.length(); i++) {
+        char ch = s.charAt(i);
+        if(count.containsKey(ch)) {
+            count.put(ch, count.get(ch) + 1);
+        } else {
+            count.put(ch, 1);
         }
-
-        String s = scanner.next().trim().toLowerCase();
-
-        if (s.length() == 1){
-            codes.put(s.charAt(0), "0");
-            return "0";
-        }
-
-        Map<Character, Integer> mapOfCharFrequencies = new HashMap<>();
-        //1. переберем все символы по очереди и рассчитаем их частоту в Map mapOfCharFrequencies
-        //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
-        for (char ch : s.toCharArray()) {
-            int count = (mapOfCharFrequencies.containsKey(ch)) ? mapOfCharFrequencies.get(ch) : 0;
-            mapOfCharFrequencies.put (ch, count + 1);
-        }
+    }
         //2. перенесем все символы в приоритетную очередь в виде листьев
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
-
-        for (Map.Entry<Character, Integer> entry: mapOfCharFrequencies.entrySet()) {
-            if(!priorityQueue.offer(new LeafNode(entry.getValue(), entry.getKey()))){
-                throw new IllegalArgumentException("Can't add new LeafNode("+entry.getValue()+","+entry.getKey()+") to priorityQueue");
-            }
-        }
-
+    for (Map.Entry<Character, Integer> entry:count.entrySet ()) {
+    Character ch =  entry.getKey();
+    Integer f = entry.getValue();
+    LeafNode leafNode = new LeafNode(f, ch);
+    priorityQueue.add(leafNode);
+    }
+    while (priorityQueue.size() > 1) {
+    Node left = priorityQueue.remove();
+    Node right = priorityQueue.remove();
+    InternalNode intern = new InternalNode(left, right);
+    priorityQueue.add(intern);
+    }
+    priorityQueue.poll().fillCodes("");
         //3. вынимая по два узла из очереди (для сборки родителя)
         //и возвращая этого родителя обратно в очередь
         //построим дерево кодирования Хаффмана.
         //У родителя частоты детей складываются.
 
-        int queueSize = priorityQueue.size() - 1;
-        for (int i = 0; i < queueSize; i++) {
-            priorityQueue.offer(new InternalNode(priorityQueue.poll(), priorityQueue.poll()));
-        }
-
         //4. последний из родителей будет корнем этого дерева
         //это будет последний и единственный элемент оставшийся в очереди priorityQueue.
         StringBuilder sb = new StringBuilder();
-
-        priorityQueue.poll().fillCodes("");
-
-        for (char ch : s.toCharArray()) {
+        for(int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
             sb.append(codes.get(ch));
         }
+        //.....
 
         return sb.toString();
         //01001100100111
@@ -170,11 +168,11 @@ public class A_Huffman {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/du4/lesson03/dataHuffman.txt");
+        File f = new File(root + "by/it/a_khmelov/lesson03/dataHuffman.txt");
         A_Huffman instance = new A_Huffman();
-//        long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         String result = instance.encode(f);
-//        long finishTime = System.currentTimeMillis();
+        long finishTime = System.currentTimeMillis();
         System.out.printf("%d %d\n", codes.size(), result.length());
         for (Map.Entry<Character, String> entry : codes.entrySet()) {
             System.out.printf("%s: %s\n", entry.getKey(), entry.getValue());

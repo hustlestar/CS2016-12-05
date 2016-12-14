@@ -1,10 +1,9 @@
-package by.it.belash_ea.lesson01;
+package by.it.sardyka.lesson01;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /*
- * Вам необходимо выполнить три способа вычисления чисел Фибоначчи
+ * Вам необходимо выполнить три способа вычисления чисел Фибоначчи.
  */
 public class Fibo {
 
@@ -39,66 +38,63 @@ public class Fibo {
     private int calc(int n) {
         //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-        if (n == 0){
-            return 0;
-        }
-        else if (n == 1){
-            return 1;
-        }
-        else {
-            int fib  = 0;
-            int fib1 = 0;
-            int fib2 = 1;
-            for (int i = 2; i <= n; i++){
-                fib = fib2 + fib1;
-                fib1 = fib2;
-                fib2 = fib;
-            }
-            return fib;
-        }
+        if(n <= 1) { return n; }
+        else { return calc(n - 1) + calc(n - 2); }
     }
 
 
-    BigInteger slowA(Integer n) {
+    BigInteger slowA(int n) {
         //рекурсия
         //здесь нужно реализовать вариант без ограничения на размер числа,
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-        if (n == 0){
-            return BigInteger.ZERO;
+        BigInteger n1;
+        BigInteger n2;
+        BigInteger n3;
+        if(n == 0) { return BigInteger.ZERO; }
+        if(n == 1) { return BigInteger.ONE; }
+        n1 = BigInteger.ZERO;
+        n2 = BigInteger.ONE;
+        n3 = BigInteger.ONE;
+        for(int i = 2; i <= n; i++)
+        {
+            n3 = n2.add(n1);
+            n1 = n2;
+            n2 = n3;
         }
-        else if (n == 1){
-            return BigInteger.ONE;
-        }
-        else {
-            return (slowA(n - 2).add(slowA(n - 1)));
-        }
+        return n3;
     }
 
-    BigInteger fastB(Integer n) {
+    BigInteger fastB(int n) {
         //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
-        BigInteger[] FibArray;
-        FibArray = new BigInteger[n + 1];
-        for (int i = 0; i <= n; i++){
-            if (i == 0){
-                FibArray[i] = BigInteger.ZERO;
-            }
-            else if (i == 1) {
-                FibArray[i] = BigInteger.ONE;
-            }
-            else {
-                FibArray[i] = FibArray[i-1].add(FibArray[i-2]);
-            }
+        if(n == 0) { return BigInteger.ZERO; }
+        if(n == 1) { return BigInteger.ONE; }
+
+        BigInteger nn[] = new BigInteger[n + 1];
+        nn[0] = BigInteger.ZERO;
+        nn[1] = BigInteger.ONE;
+        for(int i = 2; i <= n; i++)
+        {
+            nn[i] = nn[i - 1].add(nn[i - 2]);
         }
-        return FibArray[n];
+        return nn[n];
     }
 
     BigInteger fasterC(Integer n) {
 
         //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
         //вариант, какой только сумеете
-        //Необходима доработка
-        return fastB(n);
+        if(n == 0) { return BigInteger.ZERO; }
+        if((n == 1) || (n == 2)) { return BigInteger.ONE; }
+
+        BigInteger nn[] = new BigInteger[n + 1];
+        nn[0] = BigInteger.ZERO;
+        nn[2] = nn[1] = BigInteger.ONE;
+        for(int i = 3; i <= n; i++)
+        {
+            nn[i] = nn[i - 1].add(nn[i - 2]);
+        }
+        return nn[n];
     }
 
 

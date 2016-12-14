@@ -39,15 +39,15 @@ public class C_HeapMax {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение.
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
-        private List<Long> heap = new ArrayList<>();
+        private List<T> heap = new ArrayList<>();
 
-        public List<Long> getHeap() {
+        List<T> getHeap() {
             return heap;
         }
 
         int siftDown(int i) { //просеивание вниз
             int leftChildIndex , rightChildIndex, largestIndex;
-            Long tmp;
+            T tmp;
 //          while have left child
             while (2*i+1 < heap.size()){
 
@@ -77,7 +77,7 @@ public class C_HeapMax {
         int siftUp(int i) { //просеивание вверх
             int parentIndex = (i-1)/2;
             while (i > 0 && heap.get(parentIndex).compareTo(heap.get(i)) < 0){
-                long tmp = heap.get(i);
+                T tmp = heap.get(i);
                 heap.set(i, heap.get(parentIndex));
                 heap.set(parentIndex,tmp);
 
@@ -87,26 +87,25 @@ public class C_HeapMax {
             return i;
         }
 
-        void insert(Long value) { //вставка
+        void insert(T value) { //вставка
             heap.add(value);
             siftUp(heap.size()-1);
         }
 
-        Long extractMax() { //извлечение и удаление максимума
+        T extractMax() { //извлечение и удаление максимума
             return extract(0);
         }
 
-        Long extract(int index){
+        T extract(int index){
             if (heap.size()-1 < index){
                 throw new IndexOutOfBoundsException(this.toString()+"(heap.size()="+heap.size()+", index="+index+")");
             }
-            Long result = heap.get(index);
-            heap.set(index, Long.MIN_VALUE);
-            heap.remove(siftDown(index));
+            T result = heap.get(index);
+            changePriority(index, heap.remove(heap.size()-1));
             return result;
         }
 
-        public void createHeap(Long [] sourceArray){
+        public void createHeap(T [] sourceArray){
             heap = new ArrayList<>(Arrays.asList(sourceArray));
             int heapSize = sourceArray.length;
             for (int i = heapSize / 2; i >= 0; i--){
@@ -114,7 +113,7 @@ public class C_HeapMax {
             }
         }
 
-        void changePriority(int index, Long priority){
+        void changePriority(int index, T priority){
             if (heap.get(index).equals(priority)){
                 return;
             }
@@ -131,7 +130,7 @@ public class C_HeapMax {
     //эта процедура читает данные из файла, ее можно не менять.
     Long findMaxValue(InputStream stream) {
         Long maxValue=0L;
-        MaxHeap heap = new MaxHeap();
+        MaxHeap <Long> heap = new MaxHeap<>();
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(stream);
         Integer count = scanner.nextInt();
