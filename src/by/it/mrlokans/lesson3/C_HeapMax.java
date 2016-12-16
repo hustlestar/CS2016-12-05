@@ -43,22 +43,60 @@ public class C_HeapMax {
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
         private List<Long> heap = new ArrayList<>();
 
-        int siftDown(int i) { //просеивание вверх
+        int getSmallestNode(int index1, int index2){
+            if (index1 >= heap.size() || index2 >= heap.size()){
+                return index1;
+            } else if (index1 < heap.size() && heap.get(index1) < heap.get(index2)){
+                return index1;
+            }
+            return index2;
+        }
 
+        void swapIndices(int index1, int index2){
+            Long temp = heap.get(index1);
+            heap.set(index1, heap.get(index2));
+            heap.set(index2, temp);
+        }
+
+
+        int siftDown(int i) { //просеивание вверх
+            while (heap.size() > (2 * i + 1)){
+                int leftNodeIndex = 2 * i + 1;
+                int rightNodeIndex = 2 * i + 2;
+
+                int smallest = getSmallestNode(leftNodeIndex, rightNodeIndex);
+
+                if (heap.get(i) > heap.get(smallest)){
+                    swapIndices(i, smallest);
+                }
+                i = smallest;
+
+            }
             return i;
         }
 
         int siftUp(int i) { //просеивание вниз
 
+            while (i > 0){
+                int parentIndex = (i - 1) / 2;
+                if (parentIndex >= 0 && heap.get(parentIndex) < heap.get(i)){
+                    swapIndices(parentIndex, i);
+                }
+                i = parentIndex;
+            }
+
             return i;
         }
 
         void insert(Long value) { //вставка
+            heap.add(value);
+            siftUp(heap.size() - 1);
         }
 
         Long extractMax() { //извлечение и удаление максимума
             Long result = null;
-
+            result = heap.remove(0);
+            siftDown(0);
             return result;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
