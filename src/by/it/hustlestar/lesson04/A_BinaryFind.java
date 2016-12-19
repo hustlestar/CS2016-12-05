@@ -35,32 +35,33 @@ public class A_BinaryFind {
         //размер отсортированного массива
         int n = scanner.nextInt();
         //сам отсортированный массива
-        int[] a=new int[n];
+        int[] a = new int[n];
         for (int i = 1; i <= n; i++) {
-            a[i-1] = scanner.nextInt();
+            a[i - 1] = scanner.nextInt();
         }
 
         //размер массива индексов
         int k = scanner.nextInt();
-        int[] result=new int[k];
+        int[] result = new int[k];
 
-        for (int i = 0; i < k; i++) {
-            int value = scanner.nextInt();
-            //тут реализуйте бинарный поиск индекса
+        for (int i = 1; i <= n; i++) {
             int left = 0;
-            int rigth = n;
-            result[i] = -1;
-            while(left<=rigth){
-                if(value==a[left/2]){
-                    result[i]=left/2+1;
+            int right = n - 1;
+            int mid = (left + right) / 2;
+            int value = scanner.nextInt();
+            result[i - 1] = -1;
+            do {
+                if (a[mid] < value) {
+                    left = (left + right) / 2+1;
+                    mid = (left + right) / 2;
+                } else if (a[mid] > value) {
+                    right = (left + right) / 2-1;
+                    mid =  (left + right) / 2;
+                } else {
+                    result[i - 1] = mid+1;
                     break;
-                } else if (a[left/2]>value){
-                    rigth--;
-                } else{
-                    left++;
                 }
-            }
-
+            } while (left < right);
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -72,10 +73,10 @@ public class A_BinaryFind {
         InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataA.txt");
         A_BinaryFind instance = new A_BinaryFind();
         //long startTime = System.currentTimeMillis();
-        int[] result=instance.findIndex(stream);
+        int[] result = instance.findIndex(stream);
         //long finishTime = System.currentTimeMillis();
-        for (int index:result){
-            System.out.print(index+" ");
+        for (int index : result) {
+            System.out.print(index + " ");
         }
     }
 
