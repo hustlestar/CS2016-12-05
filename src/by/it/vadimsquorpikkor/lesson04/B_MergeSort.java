@@ -36,39 +36,18 @@ public class B_MergeSort {
         // тут ваше решение (реализуйте сортировку слиянием)
         // https://ru.wikipedia.org/wiki/Сортировка_слиянием
 
-        divideTheArray(a, 0, a.length);
-
-
-
-
-
+        //mergeSort(a, 0, a.length);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return a;
+        return mergeSort(a, 0, a.length-1);
     }
 
-    /*void mergeTheArray(int[] a, int[] b, int[] mergedArray) {
-        int i = 0;
-        int j = 0;
-
-
-        for (int k = 0; k<a.length+b.length; k++) {
-            if ((a[i] <= b[j] && i<=a.length) || j>b.length) {
-                mergedArray[k] = a[i];
-                i++;
-            } else {
-                mergedArray[k] = b[j];
-                j++;
-            }
-        }
-    }*/
-
-    void mergeTheArray(int[] a, int start, int middle, int end) {
+    int[] merge(int[] a, int start, int middle, int end) {
         int endOfA = middle;
-        int[] temp = new int[end - start];
+        int[] temp = new int[end - start + 1];//[end - start+1]
 
-        for (int k = start; k<end; k++) {
-            if ((a[start] <= a[middle] && start<=endOfA) || middle>end) {
+        for (int k = start; k<=end; k++) {
+            if (middle>end||(start<endOfA)&&a[start] <= a[middle]) {
                 temp[k] = a[start];
                 start++;
             } else {
@@ -76,22 +55,28 @@ public class B_MergeSort {
                 middle++;
             }
         }
+        return temp;
     }
-    void divideTheArray(int[] a, int start, int end) {
-        int middle;
-        while (true) {
-            middle = (start + end) / 2;
-            divideTheArray(a, start, middle);
-            divideTheArray(a, middle+1, end);
-            mergeTheArray(a, start, middle, end);
-        }
 
+    int[] mergeSort(int[] a, int start, int end) {
+        if (end - start <= 1) {
+            return a;
+        }
+        int middle = (start + end) / 2;
+            /*if ((end-middle <= 1)&&(middle-start <= 1)) {//middle???
+                return a;
+            }*/
+                mergeSort(a, start, middle);
+                mergeSort(a, middle+1, end);
+
+                a = merge(a, start, middle+1, end);
+            return a;
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/vadimsquorpikkor/lesson04/dataB.txt");
         B_MergeSort instance = new B_MergeSort();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.getMergeSort(stream);
