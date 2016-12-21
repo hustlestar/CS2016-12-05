@@ -80,8 +80,13 @@ public class C_HeapMax {
         }
 
         Long extractMax() { //извлечение и удаление максимума
-            Long result = heap.remove(0);
-            siftDown(0);
+            Long result;
+            if (heap.size() > 1) {
+                result = heap.remove(0);
+                siftDown(0);
+            } else {
+                result = heap.remove(0);
+            }
             return result;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
