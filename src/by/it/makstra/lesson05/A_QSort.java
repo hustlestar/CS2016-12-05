@@ -35,21 +35,26 @@ import java.util.Scanner;
 public class A_QSort {
 
     //отрезок
-    private class Segment  implements Comparable<Segment>{
-        int start;
-        int stop;
+    private class Point implements Comparable<Point>{
+        int x;
+        int index;
 
-        Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
-            //тут вообще-то лучше доделать конструктор на случай если
-            //концы отрезков придут в обратном порядке
+        public Point(int x, int index) {
+            this.x = x;
+            this.index = index;
         }
 
         @Override
-        public int compareTo(Segment o) {
-            //подумайте, что должен возвращать компаратор отрезков
-            return Integer.compare(this.start, o.start);
+        public int compareTo(Point o) {
+            //подумайте, что должен возвращать компаратор
+            if(x != o.x) return x-o.x;
+            else return(index - o.index);
+        }
+
+        @Override
+        public String toString() {
+            String p = "x:"+x+" ,ind:"+index;
+            return p;
         }
     }
 
@@ -58,98 +63,104 @@ public class A_QSort {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        //тут реализуйте логику задачи с применением быстрой сортировки
+
+        //реализованное мною решение предполагает следующее:
+        //Создаём массив точек, в который закладываем точки начала отрезка(присваиваем таким точкам индекс 0),
+        //точки конца отрезков(присваиваем таким точкам индекс m+1, где m-число точек, принадлежность которых надо найти),
+        // и непосредственно сами точки, принадлежность которых надо найти. Индекс таких точек находися в пределах [1,m]
+        // в зависимости от порядкового номера.
+        //Так сделано для удобства поиска этих точек после того, как массив будет отсортирован по
+        //возрастанию, ведь в качестве ответа нам надо дать количество пересечений с отрезком неотсортированной точки.
+
         //число отрезков отсортированного массива
         int n = scanner.nextInt();
-        Segment[] segments=new Segment[n];
+
         //число точек
         int m = scanner.nextInt();
-        int[] points=new int[m];
-        int[] result=new int[m];
+
+        //массив точек
+        Point[] points = new Point[2 * n + m];
+
+        //массив ответов
+        int[] result = new int[m];
 
         //читаем сами отрезки
-        for (int i = 0; i < n; i++) {
-            //читаем начало и конец каждого отрезка
-            segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
+        for (int i = 0; i < 2 * n; i++) {
+            //читаем начало отрезка
+            points[i++] = new Point(scanner.nextInt(), 0);
+            //читаем конец отрезка
+            points[i] = new Point(scanner.nextInt(), m+1);
         }
         //читаем точки
-        for (int i = 0; i < m; i++) {
-            points[i]=scanner.nextInt();
+        for (int i = 2 * n; i < (2 * n + m); i++) {
+            points[i] = new Point(scanner.nextInt(), i-2*n+1);
         }
-        //тут реализуйте логику задачи с применением быстрой сортировки
-        //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
-        //Мои комментарии:
-        //Реализованное мною решение предполагает следующее:
-        //Сортируем массив отрезков segments[] по возрастанию;
-        //В качестве сравниваемого значения указываем переменную start;
-        //Данная манипуляция позволяет при вводе в наивный код конструкции "if(points[i]<segments[j].start) break;"
-        //иногда значительно сократить количество действий над массивами по сравнению с наивным алгоритмом(в зависимости от входных данных),
-        //избавив программу от необходимости проверять наличие точки в отрезках, переменная start которых
-        //будет однозначно больше переменной start, которая проверялась на условие, т.к. массив отрезков отсортирован
-        //по возрастанию
+        //Arrays.sort(points);//вместо использования статического метода класса Arrays напишем свой(реализация ниже)
+        qSort(points,0,2*n+m-1);
 
-        //Arrays.sort(segments);
-        //вместо того, чтобы воспользоваться готовым статическим методом класса Arrays,
-        //пишем свой кустарный метод быстрой сортировки qSort
+        for (Point x:points){
+            System.out.println(x);}
 
-        segments = qSort(segments, 0, n-1);
+        //Теперь за один проход по массиву точек мы можем дать ответ по этой задаче.
+        // Индексы помогут нам определить зарактер точки: Входная, выходная или искомая.
+        // Если точка входная counter++, если выходная counter--, если искомая то заносим
+        // в массив ответов result в ячейку "index-1"(-1 т.к. во время вычислений произошло
+        // смещение массива на единицу) текущее значение counter.
 
-        for(Segment x:segments)
-            System.out.println("["+x.start+" : "+x.stop+"]");
+        int counter = 0;
 
-        //часть кода для проверки принадлежности точки отрезкам
-
-        for(int i =0; i<m; i++)
-        {
-            int count=0;
-            for(int j=0;j<n;j++)
-            {
-                if(segments[j].start<=points[i] && points[i]<=segments[j].stop)
-                {
-                    count++;
-                }
-                else if(points[i]<segments[j].start) break;
+        for (int i = 0; i < (2 * n + m); i++) {
+            if (points[i].index == 0) counter++;
+            else
+            if (points[i].index > m) counter--;
+            else {
+                result[points[i].index-1] = counter;
             }
-            result[i] = count;
         }
         return result;
     }
 
     //Реализация быстрой сортировки:
-    public static Segment[] qSort(Segment segs[], int left, int right) {
+    public static Point[] qSort(Point p[], int left, int right) {
         int i = left;
         int j = right;
         Random rand = new Random();
-        Segment x = segs[i + rand.nextInt(j - i + 1)];
+        Point x = p[i + rand.nextInt(j - i + 1)];
         while(i<=j)
         {
-            while(segs[i].compareTo(x)==(-1))
+            while(p[i].compareTo(x)<0)
             {
                 i++;
             }
-            while(segs[j].compareTo(x)==1)
+            while(p[j].compareTo(x)>0)
             {
                 j--;
             }
             if(i<=j)
             {
-                Segment t = segs[i];
-                segs[i] = segs[j];
-                segs[j] = t;
+                Point t = p[i];
+                p[i] = p[j];
+                p[j] = t;
                 i++;
                 j--;
             }
         }
         if (left<j)
         {
-            qSort(segs, left, j);
+            qSort(p, left, j);
         }
         if (i<right)
         {
-            qSort(segs, i, right);
+            qSort(p, i, right);
         }
-        return segs;
+        return p;
     }
+
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+
 
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
