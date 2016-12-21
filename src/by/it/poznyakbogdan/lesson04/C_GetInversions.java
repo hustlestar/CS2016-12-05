@@ -35,6 +35,41 @@ Sample Output:
 
 public class C_GetInversions {
 
+    public int inv = 0;
+
+    int[] merge(int[] ar_1, int[] ar_2){
+        int max = ar_1.length + ar_2.length;
+        int[] res = new int[max];
+        int m = 0, q = 0;
+        for (int i = 0; i < max; i++){
+            if (m >= ar_1.length & q < ar_2.length){
+                res[i] = ar_2[q];
+                q++;
+            }else if(q >= ar_2.length & m < ar_1.length){
+                res[i] = ar_1[m];
+                m++;
+            }else if (ar_1[m] <= ar_2[q] & m < ar_1.length){
+                res[i] = ar_1[m];
+                m++;
+            }else {
+                res[i] = ar_2[q];
+                inv = inv + ar_1.length - m;
+                q++;
+            }
+        }
+        return res;
+    }
+
+    int[] mergeSort(int[] arr, int l, int r){
+        int[] res = new int[1];
+        int index = (int)(l + r) / 2;
+        if (l < r){
+            return merge(mergeSort(arr, l, index), mergeSort(arr, index + 1, r));
+        }else {
+            res[0] = arr[l];
+            return res;
+        }
+    }
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -50,13 +85,11 @@ public class C_GetInversions {
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
 
 
+        mergeSort(a, 0, a.length - 1);
 
 
 
-
-
-
-
+        result = inv;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
