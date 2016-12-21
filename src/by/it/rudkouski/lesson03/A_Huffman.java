@@ -146,7 +146,11 @@ public class A_Huffman {
             InternalNode intern = new InternalNode(childLeft, childRight);
             priorityQueue.add(intern);
         }
-        priorityQueue.poll().fillCodes("");
+        if (count.size() > 1) {
+            priorityQueue.poll().fillCodes("");
+        } else {
+            priorityQueue.poll().fillCodes("0");
+        }
         //4. последний из родителей будет корнем этого дерева
         //это будет последний и единственный элемент оставшийся в очереди priorityQueue.
         StringBuilder sb = new StringBuilder();
@@ -154,7 +158,6 @@ public class A_Huffman {
             char ch = s.charAt(i);
             sb.append(codes.get(ch));
         }
-
         return sb.toString();
         //01001100100111
         //01001100100111
