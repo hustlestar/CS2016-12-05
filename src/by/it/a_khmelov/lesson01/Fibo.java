@@ -42,7 +42,7 @@ public class Fibo {
     }
 
 
-    BigInteger slowA(Integer n) {
+    public BigInteger slowA(Integer n) {
         //рекурсия
         //здесь нужно реализовать вариант без ограничения на размер числа,
         //в котором код совпадает с мат.определением чисел Фибоначчи
@@ -51,12 +51,12 @@ public class Fibo {
         return BigInteger.ZERO;
     }
 
-    BigInteger fastB(Integer n) {
+    public BigInteger fastB(Integer n) {
         //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
         return BigInteger.ZERO;
     }
 
-    BigInteger fasterC(Integer n) {
+    public BigInteger fasterC(Integer n) {
 
         //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
         //вариант, какой только сумеете

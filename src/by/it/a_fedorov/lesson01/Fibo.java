@@ -41,21 +41,20 @@ public class Fibo {
     private int calc(int n) {
         //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
-        int mas[]=new int[n+1];
+        int n_1 = 0;
+        int n_2 = 1;
+        int result = 0;
+        if (n < 2) {
+            return n;
+        } else {
+            for (int i = 2; i <= n; i++) {
+                result = n_1 + n_2;
+                n_1 = n_2;
+                n_2 = result;
+            }
+            return result;
+        }
 
-        mas[0]=0;
-        mas[1]=1;
-        int result;
-
-        for (int i=2;i<=n;i++){
-
-            mas[i]=mas[i-1]+mas[i-2];
-
-        }//1 и 2 значение записано, поэтому i=2;
-        result=mas[n];
-        return result;
-        //Алгоритм не медленный, но проигрывает за счет памяти.
-        //Хотя если сохранить массив и брать от туда значения в дальнейшем, он будет сверхбыстрый
     }
 
 
@@ -79,60 +78,43 @@ public class Fibo {
 
     BigInteger fastB(Integer n) {
         //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
-        int i=2;
-        BigInteger oneNumber=BigInteger.ZERO;
-        BigInteger twoNumber=BigInteger.ONE;
-        BigInteger sum=BigInteger.ZERO;
+        BigInteger mas[] = new BigInteger[n];
 
-        if (n==0){return oneNumber;}//0 число
-        if (n==1){return twoNumber;}//1 число
+        mas[0] = BigInteger.ZERO;
+        mas[1] = BigInteger.ONE;
 
-        while(i<=n){
+        for (int i = 2; i < mas.length; i++) {
+            mas[i] = mas[i - 1].add(mas[i - 2]);
+        }
+        //1 и 2 значение записано, поэтому i=2;
+        return mas[n];
+        //Алгоритм не медленный, но проигрывает за счет памяти.
+        //Хотя если сохранить массив и брать от туда значения в дальнейшем, он будет сверхбыстрый
+    }
+
+    BigInteger fasterC(Integer n) {
+
+        int i = 2;
+        BigInteger oneNumber = BigInteger.ZERO;
+        BigInteger twoNumber = BigInteger.ONE;
+        BigInteger sum = BigInteger.ZERO;
+
+        if (n == 0) {
+            return oneNumber;
+        }//0 число
+        if (n == 1) {
+            return twoNumber;
+        }//1 число
+
+        while (i <= n) {
             i++;
-            sum=oneNumber.add(twoNumber);
-            oneNumber=twoNumber;
-            twoNumber=sum;
+            sum = oneNumber.add(twoNumber);
+            oneNumber = twoNumber;
+            twoNumber = sum;
 
         }//возвращает со 2-го чилса
         return sum;
     }
 
-    BigDecimal fasterC(Integer n) {
 
-        //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
-        //вариант, какой только сумеете
-       /* BigDecimal one=BigDecimal.ONE;// это 1
-        BigDecimal two=one.add(one);// это 2
-        BigDecimal sqrt_5=BigDecimal.valueOf(2.2360679775);
-
-        BigDecimal temp = (one.add(sqrt_5));
-        BigDecimal fi=temp.divide (two);
-
-        BigDecimal result_1=pow(fi,n);
-        BigDecimal result_2=result_1.divide(sqrt_5);
-        BigDecimal result_3=result_2.add(one);
-
-        if (n==0){*/
-            return BigDecimal.ZERO;
-       /* }
-
-        if (n%2==0){
-
-
-            return result_2;
-        }
-        else{
-            return result_3;//незнаю откуда +1. но при проверках, не четные значения меньше на 1
-        }*/
-    }
-
-   /* private BigDecimal pow(BigDecimal fi, Integer n) {
-        BigDecimal res=BigDecimal.ONE;
-        for(int i=0;i<n;i++){
-            res=fi.multiply(res);
-        }
-
-        return res;
-    }
-*/
 }
