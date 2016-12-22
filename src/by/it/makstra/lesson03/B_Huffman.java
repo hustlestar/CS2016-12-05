@@ -2,7 +2,7 @@ package by.it.makstra.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.*;
 
 // Lesson 3. B_Huffman.
 // Восстановите строку по её коду и беспрефиксному коду символов.
@@ -51,11 +51,34 @@ public class B_Huffman {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
 
+        Map<String, Character> map = new HashMap<>();
 
+        for(int i = 0; i<count; i++) {
+            char[] words = scanner.next().toCharArray();
+            String t = scanner.next();
+            map.put(t, words[0]);
+        }
+        for (Map.Entry<String, Character> entry : map.entrySet()){
+            System.out.println(entry.getKey()+" "+entry.getValue());
+        }
 
+        char[] code = scanner.next().toCharArray();
+        System.out.println(code);
 
+        StringBuilder decode = new StringBuilder("");//
+        StringBuilder sb = new StringBuilder("");
+
+        for(char x:code)
+        {
+            sb.append(x);
+            if(map.containsKey(sb.toString()))
+            {
+                decode.append(map.get(sb.toString()));
+                sb.delete(0,code.length);
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        return result.toString(); //01001100100111
+        return decode.toString(); //01001100100111
     }
 
     public static void main(String[] args) throws FileNotFoundException {
