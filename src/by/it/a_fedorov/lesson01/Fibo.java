@@ -2,6 +2,8 @@ package by.it.a_fedorov.lesson01;
 
 import java.math.BigInteger;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Math.*;
 
@@ -78,16 +80,17 @@ public class Fibo {
 
     BigInteger fastB(Integer n) {
         //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
-        BigInteger mas[] = new BigInteger[n];
+        List<BigInteger> mas = new ArrayList<>();
 
-        mas[0] = BigInteger.ZERO;
-        mas[1] = BigInteger.ONE;
-
-        for (int i = 2; i < mas.length; i++) {
-            mas[i] = mas[i - 1].add(mas[i - 2]);
+        mas.add(BigInteger.ZERO);
+        mas.add(BigInteger.ONE);
+        BigInteger result= BigInteger.ZERO;
+        for (int i = 2; i <=n; i++) {
+            result = mas.get(i - 1).add(mas.get(i-2));
+            mas.add(result);
         }
         //1 и 2 значение записано, поэтому i=2;
-        return mas[n];
+        return result;
         //Алгоритм не медленный, но проигрывает за счет памяти.
         //Хотя если сохранить массив и брать от туда значения в дальнейшем, он будет сверхбыстрый
     }
