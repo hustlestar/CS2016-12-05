@@ -29,7 +29,6 @@ public class Lesson6Test {
         assertTrue("B failed", ok);
     }
 
-
     @Test(timeout = 1000)
     public void C() throws Exception {
         String root = System.getProperty("user.dir") + "/src/";
@@ -38,7 +37,6 @@ public class Lesson6Test {
         int result=instance.getNotUpSeqSize(stream);
         boolean ok=(result==4);
         assertTrue("C failed", ok);
-
     }
 
 }
