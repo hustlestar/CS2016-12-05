@@ -59,7 +59,7 @@ public class C_GreedyKnapsack {
                 result = result + item.cost;
                 W = W - item.weight;
             } else {
-                result = result + (double)(item.cost * W / item.weight);
+                result = result + (double)item.cost * W / item.weight;
                 break;
             }
         }
