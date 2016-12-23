@@ -49,6 +49,7 @@ public class Fibo {
         }
 
         return (n_1 + n_2);
+
     }
 
 
@@ -66,37 +67,36 @@ public class Fibo {
 
         BigInteger fastB(Integer n) {
             //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
-            List<BigInteger> fiboList = new ArrayList<BigInteger>();
-            fiboList.add(BigInteger.ZERO);
-            fiboList.add(BigInteger.ONE);
-
+            List<BigInteger> fList = new ArrayList<>();
+            fList.add(BigInteger.ZERO);
+            fList.add(BigInteger.ONE);
             for (int i = 2; i <= n; i++) {
-                fiboList.add(fiboList.get(i - 2).add(fiboList.get(i - 1)));
+                fList.add(fList.get(i - 2).add(fList.get(i - 1)));
             }
-            return fiboList.get(n - 1);
+            return fList.get(n);
         }
 
                 BigInteger fasterC(Integer n) {
 
                     //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
                     //вариант, какой только сумеете
-                    BigInteger fibo0 = BigInteger.ZERO;
-                    BigInteger fibo1 = BigInteger.ONE;
+                    BigInteger f0 = BigInteger.ZERO;
+                    BigInteger f1= BigInteger.ONE;
 
                     if (n > 1) {
-                        for (int i = 2; i < n; i++) {
+                        for (int i = 2; i <= n; i++) {
                             if (i % 2 == 0) {
-                                fibo0 = fibo0.add(fibo1);
+                                f0 = f0.add(f1);
                             } else {
-                                fibo1 = fibo1.add(fibo0);
+                                f1 = f1.add(f0);
                             }
                         }
                     }
 
                     if (n % 2 ==0){
-                        return fibo0;
+                        return f0;
                     } else {
-                        return fibo1;
+                        return f1;
                     }
                 }
             }
