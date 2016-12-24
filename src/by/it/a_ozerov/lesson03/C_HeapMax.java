@@ -43,29 +43,31 @@ public class C_HeapMax {
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
         private List<Long> heap = new ArrayList<>();
 
-        int siftDown(int i) { //просеивание вниз
-            while ((2 * i + 1 < heap.size())){
-                int left  = 2 * i + 1;
-                int right  = 2 * i + 2;
+        int siftDown(int i) { //просеивание вверх
+            while (2 * i + 1 < heap.size()) {
+                int left = 2 * i + 1;
+                int right = 2 * i + 2;
                 int j = left;
-                if (right < heap.size() && heap.get(right) > heap.get(left))
+                if (right < heap.size() && heap.get(right) > heap.get(left)) {
                     j = right;
-                if (heap.get(i) >= heap.get(j))
+                }
+                if (heap.get(i) >= heap.get(j)) {
                     break;
-                Long tmp = heap.get(i);
+                }
+                Long swap = heap.get(i);
                 heap.set(i, heap.get(j));
-                heap.set(j, tmp);
+                heap.set(j, swap);
                 i = j;
             }
             return i;
         }
 
-        int siftUp(int i) { //просеивание вверх
-            while (i > 0 && heap.get(i) > heap.get((i - 1)/2)){
-                int j = (i - 1)/2;
-                Long tmp = heap.get(i);
+        int siftUp(int i) { //просеивание вниз
+            while (i > 0 && heap.get(i) > heap.get((i - 1) / 2)) {
+                int j = (i - 1) / 2;
+                Long swap = heap.get(i);
                 heap.set(i, heap.get(j));
-                heap.set(j, tmp);
+                heap.set(j, swap);
                 i = j;
             }
             return i;
@@ -73,22 +75,20 @@ public class C_HeapMax {
 
         void insert(Long value) { //вставка
             heap.add(value);
-            siftUp(heap.size()-1);
+            siftUp(heap.size() - 1);
         }
 
         Long extractMax() { //извлечение и удаление максимума
             Long result = null;
-            if (heap.size() > 0){
+            if (heap.size() > 0) {
                 result = heap.get(0);
                 if (heap.size() > 1) {
-                    int last = heap.size() - 1;
-                    heap.set(0, heap.get(last));
-                    heap.remove(last);
-                    siftDown (0);
+                    heap.set(0, heap.get(heap.size() - 1));
+                    heap.remove(heap.size() - 1);
+                    siftDown(0);
+                } else {
+                    heap.remove(heap.size() - 1);
                 }
-                else
-                    heap.remove(0); //heap.size() - 1
-
             }
             return result;
         }
