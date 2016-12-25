@@ -51,14 +51,21 @@ public class A_LIS {
         for (int i = 0; i < n;  i++){
             d[i] = 1;
             for (int j = 0; j < i - 1; j++ ){
-                if (m[j] < m[i] & d[j] + 1 > d[i]) {
+                if (m[j] < m[i] && d[j] + 1 > d[i]) {
+                    //d[i]++;
                     d[i] = d[j + 1];
-                    if (d[i] > result) {result = d[i];};
+                }
+                if (d[i] > result) {
+                    result = d[i];
                 }
             }
         }
-
-
+        /*
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            ans = Math.max(ans, d[i]);
+        }
+        */
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

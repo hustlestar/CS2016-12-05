@@ -40,23 +40,25 @@ public class A_QSort {
 
     //отрезок
     private class Point implements Comparable<Point>{
-      //компар ту
-      int x;
+
+        int x;
         int index;//
 
-        public Point(int x, int index) {
+        private Point(int x, int index) {
             this.x = x;
             this.index = index;
-
         }
 
         @Override
         public int compareTo (Point o){
-            if (x - o.x != 0)
+            if (x - o.x != 0) {
                 return x = o.x;
-            else return index - o.index;
+            } else {
+                return index - o.index;
+            }
         }
     }
+
     /*
     private class Segment  implements Comparable{
         int start;
@@ -75,32 +77,62 @@ public class A_QSort {
             return 0;
         }
     }
+    */
 
-*/
+    private int partition (Point[] a, int low, int high) {
+        Point x = a[low];
+        int m = low;
+        for (int i = low + 1; i <= high; i++ ) {
+            if (a[i].compareTo(x) <= 0) {
+                m++;
+                Point swap = a[i];
+                a[i] = a[m];
+                a[m] = swap;
+            }
+        }
+        Point swap = a[low];
+        a[low] = a[m];
+        a[m] = swap;
+        return m;
+    }
+
+    private void qsort (Point[] a, int low, int high) {
+        if (low < high) {
+            int m = partition (a, low, high);
+            qsort(a, low, m - 1);
+            qsort(a, m + 1, high);
+        }
+    }
+
+    private void qsort (Point[] a) {
+        qsort( a, 0, a.length - 1);
+    }
+
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
- /*       //подготовка к чтению данных
+        //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //число отрезков отсортированного массива
         int n = scanner.nextInt();
+        //число точек
         int m = scanner.nextInt();
         //Segment[] segments=new Segment[n];
         Point [] points = new Point [2 * n + m];
-        //число точек
-        int m = scanner.nextInt();
-        int[] points=new int[m];
-        int[] result=new int[m];
-
+        int[] result = new int[m];
         //читаем сами отрезки
+        int p = 0;
         for (int i = 0; i < n; i++) {
             //читаем начало и конец каждого отрезка
             //segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
             int start = scanner.nextInt();
             int stop = scanner.nextInt();
-            if (start > stop)
-            {int t = start; start = stop; stop = t;}
-            points[p++] = new Points (start, -1);
-            points[p++] = new Points (start, points.length);
+            if (start > stop) {
+                int t = start;
+                start = stop;
+                stop = t;
+            }
+            points[p++] = new Point (start, -1);
+            points[p++] = new Point (start, m + 1);
         }
 
         //читаем точки
@@ -110,24 +142,24 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-        Arrays.sort (points);
+        //Arrays.sort (points);
+        qsort(points);
         int countCamOn = 0;
-        for (int i = 0; i < points.length; i++){
-            ??????int index = Point[i].index;
-            if (points[i].index < 0){
+        for (Point point: points){
+            //int index = Point[i].index;
+            if (point.index < 0){
                 countCamOn++;
+            } else {
+                if (point.index > m) {
+                    countCamOn--;
+                } else {
+                    result [point.index] = countCamOn;
+                }
             }
-            else if (points[i].index == points.length) {
-                countCamOn--;
-            } else result [points[i].index] = countCamOn;
         }
-
-*/
-
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
-
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
@@ -138,6 +170,4 @@ public class A_QSort {
             System.out.print(index+" ");
         }
     }
-
 }
-//
