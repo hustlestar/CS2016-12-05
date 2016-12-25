@@ -46,10 +46,10 @@ public class B_LongDivComSubSeq {
         int result = 0;
         int[] d = new int[n];
         for (int i = 0; i < n; i++) {
-            d[i] = 0;
+            d[i] = 1;
             for (int j = 0; j < i; j++) {
                 if (m[i] % m[j] == 0 && d[j] + 1 > d [i]) {
-                    d[i]++;
+                    d[i] = d[j] + 1;
                     if (d[i] >= result) {
                         result = d[i];
                     }
