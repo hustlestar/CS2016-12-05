@@ -16,7 +16,7 @@ import java.util.Scanner;
     Выведите максимальное 1<=k<=n, для которого гарантированно найдётся
     подпоследовательность индексов i[1]<i[2]<…<i[k] <= длины k,
     для которой каждый элемент A[i[k]] делится на предыдущий
-    т.е. для всех 1<=j<k, A[i[j]]<A[i[j+1]].
+    т.е. для всех 1<=j<k, A[i[j+1]] делится на A[i[j]].
 
 Решить задачу МЕТОДАМИ ДИНАМИЧЕСКОГО ПРОГРАММИРОВАНИЯ
 
@@ -53,7 +53,7 @@ public class B_LongDivComSubSeq {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson06/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson06/dataB.txt");
         B_LongDivComSubSeq instance = new B_LongDivComSubSeq();
         int result = instance.getDivSeqSize(stream);
         System.out.print(result);
