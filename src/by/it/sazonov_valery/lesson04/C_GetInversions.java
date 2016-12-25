@@ -3,6 +3,7 @@ package by.it.sazonov_valery.lesson04;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -49,17 +50,56 @@ public class C_GetInversions {
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
 
+        int kr = 1; // кратность сравнений
+        int shift; // сдвиг в перебираемом массиве
+        int two_size; // количество елементов для 2-го массива
+        int[] arr2;
+        while (kr < n) {
+            shift = 0;
+            while (shift < n) {
+                if (shift + kr >= n) break;
 
-
-
-
-
-
-
-
+                if (shift + kr * 2 > n) {
+                    two_size = n - (shift + kr);
+                } else {
+                    two_size = kr;
+                }
+                arr2 = mergeArrays(Arrays.copyOfRange(a, shift, shift + kr),
+                        Arrays.copyOfRange(a, shift + kr, shift + kr + two_size));
+                for (int i = 0; i < kr + two_size; ++i)
+                    a[shift + i] = arr2[i]; // замена на отсортированное
+                shift += kr * 2;
+            }
+            kr *= 2;
+        }
+        result = inversionsCount;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
+
+    private int inversionsCount;
+
+    private int[] mergeArrays(int[] arr_1, int[] arr_2) {
+        int len_1 = arr_1.length, len_2 = arr_2.length;
+        int a = 0, b = 0, len = len_1 + len_2; // a, b - счетчики в массивах
+        int[] result = new int[len];
+        for (int i = 0; i < len; i++) {
+            if (b < len_2 && a < len_1) {
+                if (arr_1[a] > arr_2[b]){
+                    result[i] = arr_2[b++];
+                    inversionsCount += (arr_1.length - a);
+                }
+                else result[i] = arr_1[a++];
+            } else if (b < len_2) {
+                result[i] = arr_2[b++];
+                inversionsCount += (arr_1.length - a);
+            } else {
+                result[i] = arr_1[a++];
+            }
+        }
+        return result;
+    }
+
 
 
     public static void main(String[] args) throws FileNotFoundException {
