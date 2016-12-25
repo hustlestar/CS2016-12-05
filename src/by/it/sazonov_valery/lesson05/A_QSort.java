@@ -37,22 +37,24 @@ import java.util.Scanner;
 
 public class A_QSort {
 
-    //отрезок
-    private class Segment  implements Comparable{
-        int start;
-        int stop;
+    //точка
+    private class MyPoint implements Comparable<MyPoint> {
+        int x;
+        int index;
 
-        Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
-            //тут вообще-то лучше доделать конструктор на случай если
-            //концы отрезков придут в обратном порядке
+        public MyPoint(int x, int index) {
+            this.x = x;
+            this.index = index;
+
         }
 
         @Override
-        public int compareTo(Object o) {
-            //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+        public int compareTo(MyPoint o) {
+            if (x - o.x != 0) {
+                return x - o.x;
+            } else {
+                return index - o.index;
+            }
         }
     }
 
@@ -63,29 +65,70 @@ public class A_QSort {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //число отрезков отсортированного массива
         int n = scanner.nextInt();
-        Segment[] segments=new Segment[n];
+
         //число точек
         int m = scanner.nextInt();
-        int[] points=new int[m];
-        int[] result=new int[m];
 
-        //читаем сами отрезки
+        MyPoint[] myPoints = new MyPoint[2 * n + m];
+        int[] result = new int[m];
+        int d = 0;
         for (int i = 0; i < n; i++) {
-            //читаем начало и конец каждого отрезка
-            segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
+            int start = scanner.nextInt();
+            int stop = scanner.nextInt();
+            if (start > stop) {
+                int temp = start;
+                start = stop;
+                stop = temp;
+            }
+            myPoints[d++] = new MyPoint(start, -1);
+            myPoints[d++] = new MyPoint(stop, myPoints.length);
         }
-        //читаем точки
-        for (int i = 0; i < n; i++) {
-            points[i]=scanner.nextInt();
+        for (int i = 0; i < m; i++) {
+            int x = scanner.nextInt();
+            myPoints[d++] = new MyPoint(x, i);
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
+        myQuickSort(myPoints, 0, myPoints.length);
 
-
-
+        int cam = 0;
+        for (int i = 0; i < myPoints.length; i++) {
+            if (myPoints[i].index < 0) {
+                cam++;
+            } else if (myPoints[i].index == myPoints.length) {
+                cam--;
+            } else {
+                result[myPoints[i].index] = cam;
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    private int myPartition(MyPoint a[], int low, int high) {
+        int m = low;
+        MyPoint x = a[low];
+        for (int i = low + 1; i < high; i++) {
+            if (a[i].compareTo(x) <= 0) {
+                m++;
+                MyPoint tmp = a[i];
+                a[i] = a[m];
+                a[m] = tmp;
+            }
+            MyPoint tmp = a[low];
+            a[low] = a[m];
+            a[m] = tmp;
+        }
+        return m;
+    }
+
+    private void myQuickSort(MyPoint a[], int low, int high) {
+        if (low < high) {
+            int m = myPartition(a, low, high);
+            myQuickSort(a, low, m - 1);
+            myQuickSort(a, m + 1, high);
+        }
     }
 
 
@@ -93,9 +136,9 @@ public class A_QSort {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson05/dataA.txt");
         A_QSort instance = new A_QSort();
-        int[] result=instance.getAccessory(stream);
-        for (int index:result){
-            System.out.print(index+" ");
+        int[] result = instance.getAccessory(stream);
+        for (int index : result) {
+            System.out.print(index + " ");
         }
     }
 
