@@ -55,7 +55,7 @@ public class A_BinaryFind {
                     ind = mid;
                     result[i] = ind + 1;
                     break;
-                } else if (low >= high) {
+                } else if (low == high) {
                     break;
                 }
                 mid = (low + high) / 2;

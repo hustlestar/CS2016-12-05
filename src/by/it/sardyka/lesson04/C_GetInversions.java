@@ -39,16 +39,16 @@ private int inversions;
     private int[] merge ( int[] mI, int[] mJ){
         int i = 0;
         int j = 0;
-        int[] mK = new int[mI.length + mJ.length];
-        for (int k = 0; k < mK.length; k++) {
+        int[] mm = new int[mI.length + mJ.length];
+        for (int k = 0; k < mm.length; k++) {
             if (j == mJ.length || (i < mI.length && mI[i] <= mJ[j])) {
-                mK[k] = mI[i++];
+                mm[k] = mI[i++];
             } else {
-                mK[k] = mJ[j++];
+                mm[k] = mJ[j++];
                 inversions += mI.length - i;
             }
         }
-        return mK;
+        return mm;
     }
 
     private int[] mergeSort ( int[] m){
