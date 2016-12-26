@@ -25,11 +25,8 @@ public class B_Sheduler {
             if (stop < ev.stop) {
                 return -1;
             }
-            if (stop < ev.stop) {
+            if (stop > ev.stop) {
                 return 1;
-            }
-            if (stop == ev.stop) {
-                return 0;
             }
             return 0;
         }
@@ -57,13 +54,13 @@ public class B_Sheduler {
         List<Event> result;
         result = new ArrayList<>();
         Arrays.sort(events);//ваше решение.
-        int i = 0;
+        int j = 0;
         int t = from;
-        while(t < to && i < events.length) {
-            if (events[i].start >= t){
-                result.add(events[i]);
-                t = events[i].stop; }
-                i++;
+        while(t < to && j < events.length) {
+            if (events[j].start >= t){
+                result.add(events[j]);
+                t = events[j].stop; }
+                j++;
             }
 
 

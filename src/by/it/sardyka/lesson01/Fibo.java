@@ -93,19 +93,20 @@ public class Fibo {
 
         //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
         //вариант, какой только сумеете
-        if (n == 0) {
-            return BigInteger.ZERO;
-        }
-        if ((n == 1) || (n == 2)) {
-            return BigInteger.ONE;
-        }
         BigInteger n1 = BigInteger.ZERO;
         BigInteger n2 = BigInteger.ONE;
         BigInteger n3 = null;
         for (int i = 2; i <= n; i++) {
-            n3 = n1.add(n2);
-            n1 = n2;
-            n2 = n3;
+            if (i % 2 == 0) {
+                n1 = n1.add(n2);
+            } else {
+                n2 = n2.add(n1);
+            }
+        }
+        if (n % 2 == 0) {
+            n3 = n1;
+        } else {
+            n3 = n2;
         }
         return n3;
     }

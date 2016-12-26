@@ -139,12 +139,17 @@ public class A_Huffman {
             priorityQueue.add(leafNode);
         }
         while (priorityQueue.size() > 1) {
-            Node left = priorityQueue.remove();
-            Node right = priorityQueue.remove();
+            Node left = priorityQueue.poll();
+            Node right = priorityQueue.poll();
             InternalNode intern = new InternalNode(left, right);
             priorityQueue.add(intern);
         }
-        priorityQueue.poll().fillCodes("");
+        Node root = priorityQueue.poll();
+        if (count.size()  == 1) {
+            root.fillCodes("0");
+        } else {
+            root.fillCodes("");
+        }
         //3. вынимая по два узла из очереди (для сборки родителя)
         //и возвращая этого родителя обратно в очередь
         //построим дерево кодирования Хаффмана.
@@ -152,8 +157,6 @@ public class A_Huffman {
 
         //4. последний из родителей будет корнем этого дерева
         //это будет последний и единственный элемент оставшийся в очереди priorityQueue.
-        //Node root = priorityQueue.poll();
-        // if (count.size() == 0)
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             char ch = s.charAt(i);

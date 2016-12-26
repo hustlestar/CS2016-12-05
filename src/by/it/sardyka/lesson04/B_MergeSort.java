@@ -47,23 +47,24 @@ public class B_MergeSort {
     private int[] merge(int[] mI, int[] mJ) {
         int i = 0;
         int j = 0;
-        int[] mK = new int[mI.length + mJ.length];
-        for (int k = 0; k < mK.length; k++) {
+        int[] mm = new int[mI.length + mJ.length];
+        for (int k = 0; k < mm.length; k++) {
             if (j == mJ.length || (i < mI.length && mI[i] <= mJ[j])) {
-                    mK[k] = mI[i++];
+                    mm[k] = mI[i++];
                 } else {
-                    mK[k] = mJ[j++];
+                    mm[k] = mJ[j++];
                 }
             }
-        return mK;
+        return mm;
     }
 
     private int [] mergeSort(int[] m) {
         if (m.length < 2) {
             return m;
         }
-        int[] left = mergeSort(Arrays.copyOfRange(m, 0, (m.length / 2)));
-        int[] right = mergeSort(Arrays.copyOfRange(m, (m.length / 2), m.length));
+        int len = m.length / 2;
+        int[] left = mergeSort(Arrays.copyOfRange(m, 0, len));
+        int[] right = mergeSort(Arrays.copyOfRange(m, len, m.length));
         m = merge(left, right);
         return m;
     }

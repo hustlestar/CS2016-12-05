@@ -1,6 +1,5 @@
 package by.it.sardyka.lesson05;
 
-import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -38,19 +37,54 @@ import java.util.Scanner;
 
 public class A_QSort {
 
-    private Point implements Comparable<Point>{
+    private class Point implements Comparable<Point> {
         int x;
         int index;//-1 start.max stop
-        public Point(int x, int index) {
+
+        private Point(int x, int index) {
             this.x = x;
-            this.index = tndex;
+            this.index = index;
+        }
+
+        @Override
+        public int compareTo(Point o) {
+            if (x - o.x != 0) {
+                return x - o.x;
+            } else {
+                return index - o.index;
+            }
         }
     }
 
-    public int compareTo(Point o) {
-        if(x - o.x!= 0 )
+    private int partition(Point[] points, int start, int end) {
+        Point point = points[start];
+        int part = start;
+        Point temp;
+        for (int i = start + 1; i < end; i++) {
+            if (points[i].compareTo(point) <= 0) {
+                part++;
+                temp = points[part];
+                points[part] = points[i];
+                points[i] = temp;
+            }
+        }
+        temp = points[start];
+        points[start] = points[part];
+        points[part] = temp;
+        return part;
     }
 
+    private void qSort(Point[] points, int start, int end) {
+        if (start < end) {
+            int part = partition(points, start, end);
+            qSort(points, start, part - 1);
+            qSort(points, part + 1, end);
+        }
+    }
+
+    private void quickSort(Point[] points) {
+        qSort(points, 0, points.length);
+    }
     //отрезок
    /* private class Segment  implements Comparable{
         int start;
@@ -77,29 +111,40 @@ public class A_QSort {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //число отрезков отсортированного массива
         int n = scanner.nextInt();
-        //Segment[] segments=new Segment[n];
         //число точек
-
         int m = scanner.nextInt();
-        Point points[] = new
-        int[] points=new int[m];
-        int[] result=new int[m];
-
+        Point[] points = new Point[m + n * 2];
+        int[] result = new int[m];
+        int ind = 0;
         //читаем сами отрезки
         for (int i = 0; i < n; i++) {
             //читаем начало и конец каждого отрезка
-            //segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
+            int start = scanner.nextInt();
+            int stop = scanner.nextInt();
+            if (start > stop) {
+                int temp = stop;
+                stop = start;
+                start = temp;
+            }
+            points[ind++] = new Point(start, -1);
+            points[ind++] = new Point(stop, m + 1);
         }
         //читаем точки
-        for (int i = 0; i < n; i++) {
-            points[i]=scanner.nextInt();
+        for (int i = 0; i < m; i++) {
+            points[ind++] = new Point(scanner.nextInt(), i);
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
-        //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
-
-
-
+        quickSort(points);
+        int CountSegment = 0;
+        for (Point p : points) {
+            if (p.index < 0) {
+                CountSegment++;
+            } else if (p.index > m) {
+                CountSegment--;
+            } else {
+                result[p.index] = CountSegment;
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -109,9 +154,9 @@ public class A_QSort {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson05/dataA.txt");
         A_QSort instance = new A_QSort();
-        int[] result=instance.getAccessory(stream);
-        for (int index:result){
-            System.out.print(index+" ");
+        int[] result = instance.getAccessory(stream);
+        for (int index : result) {
+            System.out.print(index + " ");
         }
     }
 

@@ -52,12 +52,12 @@ public class B_Huffman {
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
-        Map<String, Character> map = new HashMap<>();
+        Map<String, Character> m = new HashMap<>();
         for (int i = 0; i < count;) {
             String s = scanner.nextLine();
             if (s.contains(": ")) {
                 String[] p = s.split(": ");
-                map.put(p[1], p[0].charAt(0));
+                m.put(p[1], p[0].charAt(0));
                 i++;
             }
         }
@@ -65,11 +65,10 @@ public class B_Huffman {
         StringBuilder code = new StringBuilder("");
         for (char ch : s.toCharArray()) {
             code.append(ch);
-            if (map.containsKey(code.toString())) {
-                result.append(map.get(code.toString()));
+            if (m.containsKey(code.toString())) {
+                result.append(m.get(code.toString()));
                 code.delete(0, code.length());
             }
-
         }
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
             return result.toString(); //01001100100111
