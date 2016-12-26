@@ -1,6 +1,8 @@
 package by.it.a_ozerov.lesson01;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * Вам необходимо выполнить три способа вычисления чисел Фибоначчи.
@@ -47,6 +49,7 @@ public class Fibo {
         }
 
         return (n_1 + n_2);
+
     }
 
 
@@ -55,33 +58,45 @@ public class Fibo {
         //здесь нужно реализовать вариант без ограничения на размер числа,
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
+
         if (n <= 1) {
             return BigInteger.valueOf(n);
         }
-
         return slowA(n - 2).add(slowA(n - 1));
     }
 
         BigInteger fastB(Integer n) {
             //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
-            BigInteger[] arrayFibo = new BigInteger[n];
-            arrayFibo[0] = BigInteger.ZERO;
-            arrayFibo[1] = BigInteger.ONE;
-
-            for (int i = 2; i <= (n - 1); i++) {
-                arrayFibo[i] = arrayFibo[i - 1].add(arrayFibo[i - 2]);
+            List<BigInteger> fList = new ArrayList<>();
+            fList.add(BigInteger.ZERO);
+            fList.add(BigInteger.ONE);
+            for (int i = 2; i <= n; i++) {
+                fList.add(fList.get(i - 2).add(fList.get(i - 1)));
             }
-
-            return arrayFibo [n - 1];
+            return fList.get(n);
         }
 
                 BigInteger fasterC(Integer n) {
 
                     //попробуйте здесь релизовать самый быстрый и эффективный по использованию памяти
                     //вариант, какой только сумеете
-                    return BigInteger.ZERO;
+                    BigInteger f0 = BigInteger.ZERO;
+                    BigInteger f1= BigInteger.ONE;
+
+                    if (n > 1) {
+                        for (int i = 2; i <= n; i++) {
+                            if (i % 2 == 0) {
+                                f0 = f0.add(f1);
+                            } else {
+                                f1 = f1.add(f0);
+                            }
+                        }
+                    }
+
+                    if (n % 2 ==0){
+                        return f0;
+                    } else {
+                        return f1;
+                    }
                 }
-
-
             }
-
