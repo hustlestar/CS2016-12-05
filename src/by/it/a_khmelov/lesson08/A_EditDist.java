@@ -32,7 +32,7 @@ import java.util.Scanner;
     Sample Input 3:
     distance
     editing
-    Sample Output 2:
+    Sample Output 3:
     5
 
 */
