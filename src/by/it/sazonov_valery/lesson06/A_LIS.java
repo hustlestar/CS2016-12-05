@@ -51,7 +51,7 @@ public class A_LIS {
 
         for (int i = 0; i < n; i++) {
             arrayAnswers[i] = 1;
-            for (int j = 0; j < i - 1; j++) {
+            for (int j = 0; j < i; j++) {
                 if (m[j] < m[i] && (arrayAnswers[j] + 1) > arrayAnswers[i]) {
                     arrayAnswers[i] = arrayAnswers[j] + 1;
                 }
