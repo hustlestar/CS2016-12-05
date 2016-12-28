@@ -43,22 +43,22 @@ public class A_EditDist {
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         int result = 0;
-        int d[][] = new int[one.length()][two.length()];
-        for (int i = 0; i < one.length(); i++){
-            for (int j = 0; j < two.length(); j++){
-               if (i==0){
-                   d[i][j]=j;
-               }
-               else if (j==0){
-                   d[i][j]=i;
-               }
-               else{
+        int d[][] = new int[one.length()+1][two.length()+1];
+        for (int i = 0; i <= one.length(); i++){
+            for (int j = 0; j <= two.length(); j++){
+                if (i == 0){
+                    d[i][j] = j;
+                }
+                else if (j == 0){
+                    d[i][j]=i;
+                }
+                else{
 
-                   d[i][j] = min(d[i][j-1] + 1, d[i-1][j] + 1, d[i-1][j-1] + diff(one.charAt(i), two.charAt(j)));
-               }
+                    d[i][j] = min(d[i][j-1] + 1, d[i-1][j] + 1, d[i-1][j-1] + diff(one.charAt(i-1), two.charAt(j-1)));
+                }
             }
         }
-        result = d[one.length()-1][two.length()-1];
+        result = d[one.length()][two.length()];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
