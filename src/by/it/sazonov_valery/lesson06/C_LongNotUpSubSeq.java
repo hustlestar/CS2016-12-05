@@ -3,6 +3,7 @@ package by.it.sazonov_valery.lesson06;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -51,7 +52,42 @@ public class C_LongNotUpSubSeq {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
+        int[] arrayAnswers = new int[n];
+        int[] indexes = new int[n];
 
+        for (int i = 0; i < n; i++) {
+            arrayAnswers[i] = 1;
+            indexes[i] = -1;
+            for (int j = 0; j < i; j++) {
+                if (m[i] <= m[j] && (arrayAnswers[j] + 1) > arrayAnswers[i]) {
+                    arrayAnswers[i] = arrayAnswers[j] + 1;
+                    indexes[i] = j;
+                }
+
+            }
+
+        }
+
+        Arrays.sort(arrayAnswers);
+        result = arrayAnswers[n - 1];
+
+        int[] arrayIndexes = new int[result];
+
+        int k = 0;
+        for (int i = 1; i < n; i++)
+            if (arrayAnswers[i] > arrayAnswers[k]) {
+                k = i;
+            }
+
+        int j = k - 1;
+
+        while (k >= 0) {
+            arrayIndexes[j] = k + 1;
+            j--;
+            k = indexes[k];
+        }
+
+        System.out.println(Arrays.toString(arrayIndexes));
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;

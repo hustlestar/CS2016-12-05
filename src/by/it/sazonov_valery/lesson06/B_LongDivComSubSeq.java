@@ -3,6 +3,7 @@ package by.it.sazonov_valery.lesson06;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -44,6 +45,22 @@ public class B_LongDivComSubSeq {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
+
+        int[] arrayAnswers = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            arrayAnswers[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (m[i] % m[j] == 0 && (arrayAnswers[j] + 1) > arrayAnswers[i]) {
+                    arrayAnswers[i] = arrayAnswers[j] + 1;
+                }
+
+            }
+
+        }
+
+        Arrays.sort(arrayAnswers);
+        result = arrayAnswers[n - 1];
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
