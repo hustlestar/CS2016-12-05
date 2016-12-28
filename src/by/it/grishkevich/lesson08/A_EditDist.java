@@ -44,8 +44,8 @@ public class A_EditDist {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         int result = 0;
         int d[][] = new int[one.length()][two.length()];
-        for (int i = 0; i <= one.length(); i++){
-            for (int j = 0; j <= two.length(); j++){
+        for (int i = 0; i < one.length(); i++){
+            for (int j = 0; j < two.length(); j++){
                if (i==0){
                    d[i][j]=j;
                }
