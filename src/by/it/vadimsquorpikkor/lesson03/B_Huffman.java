@@ -2,7 +2,11 @@ package by.it.vadimsquorpikkor.lesson03;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+
+//region TASK DESKRIPTION
 
 // Lesson 3. B_Huffman.
 // Восстановите строку по её коду и беспрефиксному коду символов.
@@ -39,6 +43,7 @@ import java.util.Scanner;
 
 //        Sample Output 2:
 //        abacabad
+//endregion
 
 public class B_Huffman {
 
@@ -51,16 +56,33 @@ public class B_Huffman {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
 
-
-
-
+        Map<String,Character> decoderMap = new HashMap<>();
+        for (int i = 0; i <= count; i++) {
+            String s = scanner.nextLine();
+            if (s.contains(": ")) {
+                String[] st = s.split(": ");
+                decoderMap.put(st[1], st[0].charAt(0));//String st[0] в символ
+            }
+        }
+        String code = scanner.nextLine();
+        String myResult = "";
+        for (int i = 0; i < length; ) {
+            String sss = "";
+            int counter = 0;
+            do {
+                sss += code.charAt(i);
+                counter++;
+                i++;
+            }while (code.charAt(i-1)!='0' && counter<decoderMap.size()-1);
+            myResult += decoderMap.get(sss);
+        }
+        return myResult;
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        return result.toString(); //01001100100111
     }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelov/lesson03/encodeHuffman.txt");
+        File f = new File(root + "by/it/vadimsquorpikkor/lesson03/encodeHuffman.txt");
         B_Huffman instance = new B_Huffman();
         String result = instance.decode(f);
         System.out.println(result);
