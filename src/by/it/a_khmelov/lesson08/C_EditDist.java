@@ -30,13 +30,13 @@ import java.util.Scanner;
     short
     ports
     Sample Output 2:
-    ~p,-h,#,#,5+s,
+    -s,~p,#,#,#,+s,
 
     Sample Input 3:
     distance
     editing
     Sample Output 2:
-    +e,#,#,-,#,~i,#,-c,~g,
+    +e,#,#,-s,#,~i,#,-c,~g,
 
 
     P.S. В литературе обычно действия редакционных предписаний обозначаются так:
