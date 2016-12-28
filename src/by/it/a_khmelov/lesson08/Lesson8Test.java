@@ -30,8 +30,11 @@ public class Lesson8Test {
     public void C() throws Exception {
         C_EditDist instance = new C_EditDist();
         assertEquals("C1 failed", instance.getDistanceEdinting("ab","ab"),"#,#,");
-        assertEquals("C2 failed", instance.getDistanceEdinting("short","ports"),"~p,-h,#,#,5+s,");
-        assertEquals("C3 failed", instance.getDistanceEdinting("distance","editing"),"+e,#,#,-,#,~i,#,-c,~g,");
+        //путей может быть много, поэтому тут жестко проверить все сложно
+        //надо найти и проверить их все, что делает тест сложнее реализации
+        //возможно, что хватит только подсчета повторов.
+        assertEquals("C2 failed", instance.getDistanceEdinting("short","ports").split("#").length,4);
+        assertEquals("C3 failed", instance.getDistanceEdinting("distance","editing").split("#").length,5);
     }
 
 }
