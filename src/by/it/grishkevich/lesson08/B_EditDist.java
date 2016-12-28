@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 Необходимо:
     Решить задачу МЕТОДАМИ ДИНАМИЧЕСКОГО ПРОГРАММИРОВАНИЯ
-    Рекурсивно вычислить расстояние редактирования двух данных непустых строк
+    Итерационно вычислить расстояние редактирования двух данных непустых строк
 
     Sample Input 1:
     ab
@@ -37,25 +37,22 @@ import java.util.Scanner;
 
 */
 
-public class A_EditDist {
+public class B_EditDist {
 
 
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         int result = 0;
         int d[][] = new int[one.length()+1][two.length()+1];
-        for (int i = 0; i <= one.length(); i++){
-            for (int j = 0; j <= two.length(); j++){
-                if (i == 0){
-                    d[i][j] = j;
-                }
-                else if (j == 0){
-                    d[i][j]=i;
-                }
-                else{
-
-                    d[i][j] = min(d[i][j-1] + 1, d[i-1][j] + 1, d[i-1][j-1] + diff(one.charAt(i-1), two.charAt(j-1)));
-                }
+        for (int i = 0; i<=one.length(); i++){
+            d[i][0] = i;
+        }
+        for (int j = 0; j<=two.length();j++){
+            d[0][j] = j;
+        }
+        for (int i = 1; i<=one.length(); i++){
+            for (int j = 1; j<=two.length();j++){
+                d[i][j] = min(d[i][j-1] + 1, d[i-1][j] + 1, d[i-1][j-1] + diff(one.charAt(i-1), two.charAt(j-1)));
             }
         }
         result = d[one.length()][two.length()];
@@ -78,14 +75,16 @@ public class A_EditDist {
         } else return 1;
     }
 
+
+
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson08/dataABC.txt");
-        A_EditDist instance = new A_EditDist();
+        B_EditDist instance = new B_EditDist();
         Scanner scanner = new Scanner(stream);
         System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
         System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
         System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
     }
-}
 
+}
