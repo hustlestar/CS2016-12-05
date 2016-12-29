@@ -42,12 +42,60 @@ public class A_EditDist {
 
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        int n = one.length();
+        int m = two.length();
 
+        char[] str1 = new char[n];
+        char[] str2 = new char[m];
+
+        for (int i = 0; i < str1.length; i++) {
+            str1[i] = one.charAt(i);
+        }
+
+        for (int i = 0; i < str2.length; i++) {
+            str2[i] = two.charAt(i);
+        }
+
+        int[][] data_dist = new int[n][m];
 
         int result = 0;
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+
+        result = calc_dist(str1, str2, n, m);
+
+        return result;
+
+    }
+
+    int get_min(int i, int j, int k){
+        int res = 0;
+        if (i <= j && i <= k){
+            res = i;
+        }else if(j <= i && j <= k ){
+            res = j;
+        }else {
+            res = k;
+        }
+        return res;
+    }
+
+    public int calc_dist(char[] s1, char[] s2, int col, int row){
+        int result = 0;
+        if (col == 0){
+            result = row;
+        }else if (row == 0){
+            result = col;
+        }else if(s1[col - 1] == s2[row - 1]){
+            result = calc_dist(s1, s2, col - 1, row - 1);
+        }else {
+            result = get_min(calc_dist(s1, s2, col - 1, row), calc_dist(s1, s2, col , row - 1),
+                    calc_dist(s1, s2, col - 1, row - 1)) + 1;
+        }
         return result;
     }
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 
 
     public static void main(String[] args) throws FileNotFoundException {

@@ -42,12 +42,59 @@ public class B_EditDist {
 
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        int n = one.length();
+        int m = two.length();
+
+        char[] str1 = new char[n];
+        char[] str2 = new char[m];
+
+        for (int i = 0; i < str1.length; i++) {
+            str1[i] = one.charAt(i);
+        }
+
+        for (int i = 0; i < str2.length; i++) {
+            str2[i] = two.charAt(i);
+        }
+
+        int[][] data_dist = new int[n + 1][m + 1];
+
+        for (int i = 0; i <= str1.length; i++){
+            data_dist[i][0] = i;
+        }
+
+        for (int i = 0; i <= str2.length; i++){
+            data_dist[0][i] = i;
+        }
 
 
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < m + 1; j++) {
+                if (str1[i - 1] == str2[j - 1]){
+                    data_dist[i][j] = data_dist[i - 1][j - 1];
+                    System.out.printf(data_dist[i][j] + ", ");
+                }else {
+                    data_dist[i][j] = get_min(data_dist[i - 1][j], data_dist[i][j - 1], data_dist[i - 1][j - 1]) + 1;
+                    System.out.printf(data_dist[i][j] + ", ");
+                }
+            }
+            System.out.println();
+        }
 
-        int result = 0;
+        int result = data_dist[n][m];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    int get_min(int i, int j, int k){
+        int res = 0;
+        if (i <= j && i <= k){
+            res = i;
+        }else if(j <= i && j <= k ){
+            res = j;
+        }else {
+            res = k;
+        }
+        return res;
     }
 
 
