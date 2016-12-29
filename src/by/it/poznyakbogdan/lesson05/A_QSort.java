@@ -62,9 +62,9 @@ public class A_QSort {
     }
     private class Point{
         int start;
-        boolean type;
+        int type;
 
-        Point(int start, boolean type){
+        Point(int start, int type){
             this.start = start;
             this.type = type;
         }
@@ -83,7 +83,7 @@ public class A_QSort {
         int i = begin + 1;
         int j = end;
         int result = begin;
-        while (i < j){
+        while (i <= j){
             if (array[i].start >= array[m].start){
                 boolean flag = true;
                 while (flag == true && i <= j){
@@ -122,23 +122,23 @@ public class A_QSort {
         //число отрезков отсортированного массива
         int n = scanner.nextInt();
         Segment[] segments=new Segment[n];
-        Point[] dots = new Point[n*2];
+//        Point[] dots = new Point[n*2 + m];
         //число точек
         int m = scanner.nextInt();
         int[] points=new int[m];
         int[] result=new int[m];
-
+        Point[] dots = new Point[n*2 + m];
         //читаем сами отрезки
         for (int i = 0; i < n; i++) {
             //читаем начало и конец каждого отрезка
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
-            dots[2*i] = new Point(segments[i].start, true);
-            dots[2*i + 1] = new Point(segments[i].stop, false);
+            dots[2*i] = new Point(segments[i].start, 1);
+            dots[2*i + 1] = new Point(segments[i].stop, 0);
 
         }
         //читаем точки
         for (int i = 0; i < m; i++) {
-            points[i]=scanner.nextInt();
+            dots[n*2 + i] = new Point(scanner.nextInt(), 2);
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
@@ -146,7 +146,19 @@ public class A_QSort {
         for (int i = 0; i < dots.length; i++) {
             System.out.println(dots[i].start);
         }
-
+        Point[] data_points = new Point[n*2 + m];
+        int active = 0;
+        int k = 0;
+        for (int i = 0; i < data_points.length; i++){
+            if (dots[i].type == 1){
+                active++;
+            }else if(dots[i].type == 0 && active > 0){
+                active--;
+            }else {
+                result[k] = active;
+                k++;
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -155,7 +167,7 @@ public class A_QSort {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/poznyakbogdan/lesson05/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson05/dataA.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
         for (int index:result){
