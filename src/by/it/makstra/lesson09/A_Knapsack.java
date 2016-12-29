@@ -49,7 +49,6 @@ public class A_Knapsack {
         for(int i=0;i<=w; i++){System.out.print(i+" ");}
         System.out.println();
 
-
         for(int i = 1; i<=w; i++)
         {
             for(int j=1;j<=n;j++)
@@ -68,7 +67,6 @@ public class A_Knapsack {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
-
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
