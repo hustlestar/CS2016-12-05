@@ -32,9 +32,30 @@ public class B_CountSort {
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
 
+        int max, min = max = points[0];
 
+        for(int i = 0; i < points.length; i++){
+            if (points[i] >= max){
+                max = points[i];
+            }else if(points[i] <= min){
+                min = points[i];
+            }
+        }
 
+        System.out.println(min + " " + max);
+        int[] frequnce = new int[max - min + 1];
 
+        for (int i = 0; i < points.length; i++){
+            frequnce[points[i] - min]++;
+
+        }
+
+        int index = 0;
+        for (int i = 0; i < frequnce.length; i++){
+            for (int j = 0; j < frequnce[i]; j++){
+                points[index++] = i + min;
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;

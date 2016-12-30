@@ -43,8 +43,13 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            if (start > stop){
+                this.start = stop;
+                this.stop = start;
+            } else {
+                this.start = start;
+                this.stop = stop;
+            }
             //тут вообще-то лучше доделать конструктор на случай если
             //концы отрезков придут в обратном порядке
         }
@@ -55,7 +60,60 @@ public class A_QSort {
             return 0;
         }
     }
+    private class Point{
+        int start;
+        int type;
 
+        Point(int start, int type){
+            this.start = start;
+            this.type = type;
+        }
+
+    }
+
+
+    void swap(Point[] array, int a, int b){
+        Point temp = array[a];
+        array[a] = array[b];
+        array[b] = temp;
+    }
+
+    int partition(Point[] array, int begin, int end){
+        int m = begin;
+        int i = begin + 1;
+        int j = end;
+        int result = begin;
+        while (i <= j){
+            if (array[i].start >= array[m].start){
+                boolean flag = true;
+                while (flag == true && i <= j){
+                    if (array[j].start < array[m].start){
+                        swap(array, i, j);
+                        result++;
+                        j--;
+                        flag = false;
+                    }else{
+                        j--;
+                    }
+                }
+            }else {
+                result++;
+            }
+            i++;
+        }
+        swap(array, result, m);
+        return result;
+    }
+
+    private void quickSort(Point[] ar, int begin, int end){
+        if (begin >= end){
+
+        }else {
+            int m = partition(ar, begin, end);
+            quickSort(ar, begin, m - 1);
+            quickSort(ar, m + 1, end);
+        }
+    }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -64,25 +122,43 @@ public class A_QSort {
         //число отрезков отсортированного массива
         int n = scanner.nextInt();
         Segment[] segments=new Segment[n];
+//        Point[] dots = new Point[n*2 + m];
         //число точек
         int m = scanner.nextInt();
         int[] points=new int[m];
         int[] result=new int[m];
-
+        Point[] dots = new Point[n*2 + m];
         //читаем сами отрезки
         for (int i = 0; i < n; i++) {
             //читаем начало и конец каждого отрезка
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
+            dots[2*i] = new Point(segments[i].start, 1);
+            dots[2*i + 1] = new Point(segments[i].stop, 0);
+
         }
         //читаем точки
-        for (int i = 0; i < n; i++) {
-            points[i]=scanner.nextInt();
+        for (int i = 0; i < m; i++) {
+            dots[n*2 + i] = new Point(scanner.nextInt(), 2);
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
-
-
+        quickSort(dots, 0, dots.length - 1);
+        for (int i = 0; i < dots.length; i++) {
+            System.out.println(dots[i].start);
+        }
+        Point[] data_points = new Point[n*2 + m];
+        int active = 0;
+        int k = 0;
+        for (int i = 0; i < data_points.length; i++){
+            if (dots[i].type == 1){
+                active++;
+            }else if(dots[i].type == 0 && active > 0){
+                active--;
+            }else {
+                result[k] = active;
+                k++;
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
