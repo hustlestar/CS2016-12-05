@@ -44,9 +44,9 @@ public class A_QSort {
         int x;
         int index;//
 
-        private Point(int x, int index) {
+        private Point(int x, int pointIndex) {
             this.x = x;
-            this.index = index;
+            this.index = pointIndex;
         }
 
         @Override
@@ -105,7 +105,7 @@ public class A_QSort {
     }
 
     private void qsort (Point[] a) {
-        qsort( a, 0, a.length - 1);
+        qsort(a, 0, a.length - 1);
     }
 
     int[] getAccessory(InputStream stream) throws FileNotFoundException {
@@ -120,7 +120,7 @@ public class A_QSort {
         Point [] points = new Point [2 * n + m];
         int[] result = new int[m];
         //читаем сами отрезки
-        int p = 0;
+        int index = 0;
         for (int i = 0; i < n; i++) {
             //читаем начало и конец каждого отрезка
             //segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
@@ -131,14 +131,14 @@ public class A_QSort {
                 start = stop;
                 stop = t;
             }
-            points[p++] = new Point (start, -1);
-            points[p++] = new Point (start, m + 1);
+            points[index++] = new Point (start, -1);
+            points[index++] = new Point (stop, m + 1);
         }
 
         //читаем точки
         for (int i = 0; i < m; i++) {
             int x = scanner.nextInt();
-            points[p++]= new Point (x, i);
+            points[index++]= new Point (x, i);
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
