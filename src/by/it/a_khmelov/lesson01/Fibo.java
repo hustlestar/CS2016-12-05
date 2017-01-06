@@ -1,10 +1,13 @@
+/*
 package by.it.a_khmelov.lesson01;
 
 import java.math.BigInteger;
 
+*/
 /*
- * Вам необходимо выполнить три способа вычисления чисел Фибоначчи.
- */
+ * Вам необходимо выполнить три способа вычисления чисел Фибоначчи
+ *//*
+
 public class Fibo {
 
     private long startTime = System.currentTimeMillis();
@@ -65,3 +68,4 @@ public class Fibo {
 
 
 }
+*/

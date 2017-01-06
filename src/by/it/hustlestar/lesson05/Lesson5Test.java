@@ -36,7 +36,7 @@ public class Lesson5Test {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson05/dataC.txt");
         C_QSortOptimized instance = new C_QSortOptimized();
-        int[] result=instance.getAccessory2(stream);
+        int[] result=instance.getAccessory(stream);
         boolean ok=Arrays.equals(result,new int[]{1,0,0});
         assertTrue("C failed", ok);
     }
