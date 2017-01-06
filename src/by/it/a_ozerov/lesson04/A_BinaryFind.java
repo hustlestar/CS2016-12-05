@@ -39,7 +39,6 @@ public class A_BinaryFind {
         for (int i = 1; i <= n; i++) {
             a[i-1] = scanner.nextInt();
         }
-
         //размер массива индексов
         int k = scanner.nextInt();
         int[] result=new int[k];
@@ -55,7 +54,7 @@ public class A_BinaryFind {
                     index = mid;
                     break;
                 } else {
-                    if (low >= high) {
+                    if (low == high) {
                         break;
                     }
                 }
@@ -66,7 +65,7 @@ public class A_BinaryFind {
                     low = mid + 1;
                 }
             }
-            if (index >= 1) {
+            if (index > -1) {
                 index++;
             }
             result[i] = index;
@@ -82,6 +81,7 @@ public class A_BinaryFind {
         //long startTime = System.currentTimeMillis();
         int[] result=instance.findIndex(stream);
         //long finishTime = System.currentTimeMillis();
+        System.out.println();
         for (int index:result){
             System.out.print(index+" ");
         }
