@@ -48,18 +48,40 @@ public class C_GetInversions {
         }
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
+        mergeSort(a);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
+
+    private int[] mergeSort(int[] a) {
+        if(a.length<2) return a;
+        int[] left = new int[a.length/2];
+        int[] right = new int[a.length-a.length/2];
+        System.arraycopy(a, 0, left, 0, left.length);
+        System.arraycopy(a, left.length, right, 0, right.length);
+        left = mergeSort(left);
+        right = mergeSort(right);
+        return merge(left, right);
+    }
+
+    private int inversions;
+
+    private int[] merge(int[] left, int[] right) {
+        int i = 0;
+        int j = 0;
+        int[] sorted = new int[left.length+right.length];
+        for (int point : sorted) {
+            if (j==right.length || (i < left.length && left[i] <= right[j])){
+                point = left[i++];
+            } else{
+                point = right[j++];
+                inversions = inversions + left.length - i;
+            }
+        }
+        return sorted;
+    }
+
 
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -69,6 +91,6 @@ public class C_GetInversions {
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
         //long finishTime = System.currentTimeMillis();
-        System.out.print(result);
+        System.out.print(instance.inversions);
     }
 }

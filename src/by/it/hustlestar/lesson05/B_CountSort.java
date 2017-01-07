@@ -24,18 +24,34 @@ public class B_CountSort {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //размер массива
         int n = scanner.nextInt();
-        int[] points=new int[n];
+        int[] points = new int[n];
 
         //читаем точки
-        for (int i = 0; i < n; i++) {
-            points[i]=scanner.nextInt();
-        }
+
         //тут реализуйте логику задачи с применением сортировки подсчетом
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            points[i] = scanner.nextInt();
+            if (min > points[i]) {
+                min = points[i];
+                continue;
+            }
+            if (max < points[i]) {
+                max = points[i];
+            }
+        }
 
-
-
-
-
+        int[] counter = new int[max - min + 1];
+        for (int i = 0; i < n; i++) {
+            counter[-min + points[i]]++;
+        }
+        int i = 0;
+        for (int j = 0; j < counter.length; j++) {
+            for (int k = 0; k < counter[j]; k++) {
+                points[i++] = j + min;
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;
     }
